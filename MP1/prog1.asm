@@ -132,7 +132,7 @@ HEX_LOOP
 
 HEX_BITCOUNT
 	ADD R4, R3, #-4
-	BRzp PRINT
+	BRzp HEX_OUTPUT
 	ADD R5, R5, R5		; shift digit left
 	ADD R1, R1, #0
 	BRzp HEX_LEFTSHIFT
@@ -143,24 +143,25 @@ HEX_LEFTSHIFT
 	ADD R3, R3, #1 		; incr bit counter
 	BR 	HEX_BITCOUNT	; check if bit is 4 yet
 
-PRINT
+HEX_OUTPUT
 	ADD R4, R5, #-9
 	BRnz HEX_NUM
 	LD 	R4, x0041
 	ADD R0, R4, R5 		; put the correct ascii value in R0 for letter
 	ADD R0, R0, #-10
-	BRnzp PRINT_NUM
+	BRnzp PRINT
 
 HEX_NUM
 	LD R4, x0030
 	ADD R0, R4, R5		; put the correct ascii value in R0 for number
+PRINT
 	OUT
 	ADD R6, R6, #1
 	BRnzp HEX_LOOP
 
 PRINT_NUM
 	;;;;;;;;;;;;;;;;;;;;;;;
-	AND R0, R0, x0000
+	AND R0, R0, #0
 	ADD R0, R0, #10
 	OUT
 
