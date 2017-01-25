@@ -124,28 +124,27 @@ ALPHABET_LOOP
 	AND R6, R6, #0 		; reset digit counter
 
 HEX_LOOP
+	ADD R4, R6, #-4
+	BRzp PRINT_NUM
+
 	AND R3, R3, #0		; reset bit counter
 	AND R5, R5, #0		; reset digit
-
-	ADD R4, R6, #-4
-	BRzp DONE
 
 HEX_BITCOUNT
 	ADD R4, R3, #-4
 	BRzp PRINT
-	ADD R5, R5, R5		; Left shift the digit
-	ADD R3, R3, #0
+	ADD R5, R5, R5		; shift digit left
+	ADD R1, R1, #0
 	BRzp HEX_LEFTSHIFT
-	ADD R5, R5, #1
+	ADD R5, R5, #1 		; add one to digit
 
 HEX_LEFTSHIFT
-	ADD R3, R3, R3
+	ADD R1, R1, R1		; shift R1 left
 	ADD R3, R3, #1 		; incr bit counter
-	BRnzp HEX_BITCOUNT	; check if bit is 4 yet
+	BR 	HEX_BITCOUNT	; check if bit is 4 yet
 
 PRINT
 	ADD R4, R5, #-9
-	AND R0, R0, #0
 	BRnz HEX_NUM
 	LD 	R4, x0041
 	ADD R0, R4, R5 		; put the correct ascii value in R0 for letter
@@ -155,6 +154,9 @@ PRINT
 HEX_NUM
 	LD R4, x0030
 	ADD R0, R4, R5		; put the correct ascii value in R0 for number
+	OUT
+	ADD R6, R6, #1
+	BRnzp HEX_LOOP
 
 PRINT_NUM
 	;;;;;;;;;;;;;;;;;;;;;;;
