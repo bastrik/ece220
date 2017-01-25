@@ -156,7 +156,7 @@ HEX_NUM
 	ADD R0, R4, R5		; put the correct ascii value in R0 for number
 PRINT
 	OUT
-	ADD R6, R6, #1
+	ADD R6, R6, #10
 	BRnzp HEX_LOOP
 
 PRINT_NUM
