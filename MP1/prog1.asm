@@ -162,12 +162,12 @@ PRINT_NUM
 	ADD R0, R0, #10
 	OUT
 
-	ADD R6, R6, #1 		; incr
+	ADD R2, R2, #1 		; incr
 
 	AND R1, R1, #0
 	LD R1, xFFE5		; FFE5 is the negative number of bins
 
-	ADD R1, R1, R6		; check how many iterations are done
+	ADD R1, R1, R2		; check how many iterations are done
 	BRn ALPHABET_LOOP
 
 
