@@ -99,6 +99,76 @@ GET_NEXT
 PRINT_HIST
 
 ; you will need to insert your code to print the histogram here
+; Registers I am going to use;
+; R1 value to print in hex
+; R2 line counter
+; R3 bit counter
+; R4 temp
+; R5 digit
+; R6 digit counter
+
+	AND	R2, R2, x0000 	; init the line counter to 0
+
+ALPHABET_LOOP
+	LD 	R1, HIST_ADDR 	; load frequency
+	ADD R1, R1, R2		; offset by line to get each letter frequency
+	LDR R1, R1, x0000
+
+	LD 	R0, x0040		; @ = 40 in ASCII
+	ADD R0, R0, R2		; offset by line to get each letter ASCII
+	OUT
+
+	LD 	R0, x0020		; space = 20 in ASCII
+	OUT
+
+	AND R6, R6, #0 		; reset digit counter
+
+HEX_LOOP
+	AND R3, R3, #0		; reset bit counter
+	AND R5, R5, #0		; reset digit
+
+	ADD R4, R6, #-4
+	BRzp DONE
+
+HEX_BITCOUNT
+	ADD R4, R3, #-4
+	BRzp PRINT
+	ADD R5, R5, R5		; Left shift the digit
+	ADD R3, R3, #0
+	BRzp HEX_LEFTSHIFT
+	ADD R5, R5, #1
+
+HEX_LEFTSHIFT
+	ADD R3, R3, R3
+	ADD R3, R3, #1 		; incr bit counter
+	BRnzp HEX_BITCOUNT	; check if bit is 4 yet
+
+PRINT
+	ADD R4, R5, #-9
+	AND R0, R0, #0
+	BRnz HEX_NUM
+	LD 	R4, x0041
+	ADD R0, R4, R5 		; put the correct ascii value in R0 for letter
+	ADD R0, R0, #-10
+	BRnzp PRINT_NUM
+
+HEX_NUM
+	LD R4, x0030
+	ADD R0, R4, R5		; put the correct ascii value in R0 for number
+
+PRINT_NUM
+	;;;;;;;;;;;;;;;;;;;;;;;
+	AND R0, R0, x0000
+	ADD R0, R0, #10
+	OUT
+
+	ADD R6, R6, #1 		; incr
+
+	AND R1, R1, #0
+	LD R1, xFFE5		; FFE5 is the negative number of bins
+
+	ADD R1, R1, R6		; check how many iterations are done
+	BRn ALPHABET_LOOP
 
 
 
