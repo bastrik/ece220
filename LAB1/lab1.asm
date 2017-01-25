@@ -1,4 +1,4 @@
- Lab 1 
+ ;Lab 1 
  ; assignment: develop a code to print a value stored in a register 
  ;             as a hexadecimal number to the monitor
  ; algorithm: turnin each group of four bits into a digit
