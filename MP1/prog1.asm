@@ -107,18 +107,18 @@ PRINT_HIST
 ; R5 digit
 ; R6 digit counter
 
-	AND	R2, R2, x0000 	; init the line counter to 0
+	AND	R2, R2, #0 	; init the line counter to 0
 
 ALPHABET_LOOP
 	LD 	R1, HIST_ADDR 	; load frequency
 	ADD R1, R1, R2		; offset by line to get each letter frequency
 	LDR R1, R1, x0000
 
-	LD 	R0, x0040		; @ = 40 in ASCII
+	LD 	R0, AT		; @ = 40 in ASCII
 	ADD R0, R0, R2		; offset by line to get each letter ASCII
 	OUT
 
-	LD 	R0, x0020		; space = 20 in ASCII
+	LD 	R0, SPACE		; space = 20 in ASCII
 	OUT
 
 	AND R6, R6, #0 		; reset digit counter
@@ -177,7 +177,8 @@ PRINT_NUM
 
 DONE	HALT			; done
 
-
+SPACE 		.FILL x0020	; ASCII for space
+AT 			.FILL x0040 ; ASCII for @
 ; the data needed by the program
 NUM_BINS	.FILL #27	; 27 loop iterations
 NEG_AT		.FILL xFFC0	; the additive inverse of ASCII '@'
