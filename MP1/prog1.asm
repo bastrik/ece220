@@ -124,16 +124,16 @@ ALPHABET_LOOP
 	AND R6, R6, #0 		; reset digit counter
 
 HEX_LOOP
-	ADD R4, R6, #-4
+	ADD R4, R6, #-4		; printed < 4 digits?
 	BRzp PRINT_NUM
 
 	AND R3, R3, #0		; reset bit counter
 	AND R5, R5, #0		; reset digit
 HEX_BITCOUNT
-	ADD R4, R3, #-4
+	ADD R4, R3, #-4		; got < 4 bits from R1?
 	BRzp HEX_OUTPUT
 	ADD R5, R5, R5		; shift digit left
-	ADD R1, R1, #0
+	ADD R1, R1, #0		; R1 < 0? (MSB = 1)
 	BRzp HEX_LEFTSHIFT
 	ADD R5, R5, #1 		; add one to digit
 
@@ -143,15 +143,15 @@ HEX_LEFTSHIFT
 	BR 	HEX_BITCOUNT	; check if bit is 4 yet
 
 HEX_OUTPUT
-	ADD R4, R5, #-9
+	ADD R4, R5, #-9		; digit <= 9?
 	BRnz HEX_NUM
-	LD 	R4, A
+	LD 	R4, A 			; add A
 	ADD R0, R4, R5 		; put the correct ascii value in R0 for letter
 	ADD R0, R0, #-10
 	BRnzp PRINT
 
 HEX_NUM
-	LD R4, ZERO
+	LD R4, ZERO 		; add 0
 	ADD R0, R4, R5		; put the correct ascii value in R0 for number
 PRINT
 	OUT
@@ -161,16 +161,18 @@ PRINT
 PRINT_NUM
 	;;;;;;;;;;;;;;;;;;;;;;;
 	AND R0, R0, #0
-	ADD R0, R0, #10
+	ADD R0, R0, #10 	; print new line
 	OUT
 
 	ADD R2, R2, #1 		; incr
 
 	AND R1, R1, #0
-	LD R1, NEG_BINS		; FFE5 is the negative number of bins
-
-	ADD R1, R1, R2		; check how many iterations are done
-	BRn ALPHABET_LOOP
+	ADD R1, R2, #0
+	NOT R1, R1
+	ADD R1, R1, #1
+	LD  R5, NUM_BINS
+	ADD R5, R5, R1		; check how many iterations are done
+	BRp ALPHABET_LOOP
 
 
 
@@ -182,7 +184,6 @@ ZERO 		.FILL x0030 ; ASCII for 0
 A 			.FILL x0041 ; ASCII for A
 ; the data needed by the program
 NUM_BINS	.FILL #27	; 27 loop iterations
-NEG_BINS	.FILL xFFE5 ; 2s complement of NUM_BINS
 NEG_AT		.FILL xFFC0	; the additive inverse of ASCII '@'
 AT_MIN_Z	.FILL xFFE6	; the difference between ASCII '@' and 'Z'
 AT_MIN_BQ	.FILL xFFE0	; the difference between ASCII '@' and '`'
