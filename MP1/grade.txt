@@ -183,6 +183,6 @@ Grade:
 ******
 Late submission: 0
 Functionality: 90
-Comments and Style: Not Yet Graded
-Intro paragraph: Not Yet Graded
-Total: 
+Comments and Style: 5
+Intro paragraph: 0
+Total: 95 
