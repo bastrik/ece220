@@ -10,11 +10,11 @@ GETCHAR
 	GETC
 	OUT
 CHKLINE
-	LD R1, LINE
+	LD R1, SEMICOLON
 	NOT R1, R1
 	ADD R1, R1, #1
 	ADD R1, R0, R1
-	BRz POP_LINE 		; if new line, validate expression
+	BRz POP_LINE 		; if semicolon, validate expression
 CHKSPACE
 	LD R1, SPACE
 	NOT R1, R1
@@ -324,7 +324,7 @@ SEVEN 		.FILL x0037
 EIGHT 		.FILL x0038
 NINE 		.FILL x0039
 SPACE 		.FILL x0020
-LINE 		.FILL x000A
+SEMICOLON 	.FILL x003B
 
 ;IN:R0, OUT:R5 (0-success, 1-fail/overflow)
 ;R3: STACK_END R4: STACK_TOP
