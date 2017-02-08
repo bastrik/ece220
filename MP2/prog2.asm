@@ -101,9 +101,12 @@ EVALNUM
 	JSR INVALID 		; not a number
 
 PUSHNUM
-	ADD R0, R0, #-48
+	LD R1, OFFSET
+	ADD R0, R0, R1
 	JSR PUSH
 	JSR GETCHAR
+
+OFFSET .FILL xFFD0   	; -48 in 2's complement
 
 POP_PLUS
 	JSR POP
