@@ -14,7 +14,7 @@ CHKLINE
 	NOT R1, R1
 	ADD R1, R1, #1
 	ADD R1, R0, R1
-	BRz EVAL 			; if new line, validate expression
+	BRz POP_LINE 		; if new line, validate expression
 CHKSPACE
 	LD R1, SPACE
 	NOT R1, R1
