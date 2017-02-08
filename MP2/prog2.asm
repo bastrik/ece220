@@ -232,7 +232,6 @@ EVALUATE
 ;input R3, R4
 ;out R0
 PLUS	
-;your code goes here
 	ADD R0, R3, R4
 	JSR PUSH
 	JSR GETCHAR	
@@ -240,7 +239,6 @@ PLUS
 ;input R3, R4
 ;out R0
 MIN	
-;your code goes here
 	NOT R4, R4
 	ADD R4, R4, #1
 	ADD R0, R3, R4
@@ -251,7 +249,6 @@ MIN
 ;input R3, R4
 ;out R0
 MUL	
-;your code goes here
 	ADD R0, R4, #0
 	BRz MULZERO
 	AND R0, R0, #0
@@ -266,7 +263,6 @@ MULZERO
 ;input R3, R4
 ;out R0
 DIV	
-;your code goes here
 	AND R0, R0, #0
 	NOT R4, R4
 	ADD R4, R4, #1
@@ -281,7 +277,6 @@ DIVLOOP
 ;input R3, R4
 ;out R0
 EXP
-;your code goes here
 	ADD R3, R3, #0
 	BRz EXPZERO
 	ADD R4, R4, #0
