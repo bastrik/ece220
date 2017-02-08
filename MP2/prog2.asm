@@ -100,6 +100,11 @@ EVALNUM
 	BRz PUSHNUM 		; 9 found
 	JSR INVALID 		; not a number
 
+PUSHNUM
+	ADD R0, R0, #-48
+	JSR PUSH
+	JSR GETCHAR
+
 POP_PLUS
 	JSR POP
 	ADD R4, R0, #0 		; R4 <- R0
@@ -175,7 +180,7 @@ PRINT_HEX
 	AND R6, R6, #0 		; reset digit counter
 HEX_LOOP
 	ADD R4, R6, #-4		; printed < 4 digits?
-	BRzp PRINT_NUM
+	BRzp DONE
 	AND R1, R1, #0		; reset bit counter
 	AND R5, R5, #0		; reset digit
 HEX_BITCOUNT
