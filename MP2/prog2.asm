@@ -177,6 +177,7 @@ ERR 		.STRINGZ "Invalid Expression"
 ; R5 digit
 ; R6 digit counter
 PRINT_HEX
+	ST  R5, SOLN
 	ADD R3, R5, #0
 	AND R6, R6, #0 		; reset digit counter
 HEX_LOOP
@@ -212,8 +213,11 @@ PRINT
 	OUT
 	ADD R6, R6, #1
 	BRnzp HEX_LOOP
-DONE	HALT			; done
+DONE	
+	LD 	R5, SOLN
+	HALT			; done
 
+SOLN  		.BLKW #1
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;R0 - character input from keyboard
 ;R6 - current numerical output
@@ -282,7 +286,6 @@ EXP
 	BRz EXPZERO
 	ADD R4, R4, #0
 	BRz EXPONE
-
 	AND R0, R0, #0
 	ADD R5, R4, #-1		; R5 exploop counter
 	BRz EXPBASE
