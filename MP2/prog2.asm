@@ -192,12 +192,10 @@ HEX_BITCOUNT
 	ADD R3, R3, #0		; R3 < 0? (MSB = 1)
 	BRzp HEX_LEFTSHIFT
 	ADD R5, R5, #1 		; add one to digit
-
 HEX_LEFTSHIFT
 	ADD R3, R3, R3		; shift R3 left
 	ADD R1, R1, #1 		; incr bit counter
 	BR 	HEX_BITCOUNT	; check if bit is 4 yet
-
 HEX_OUTPUT
 	ADD R4, R5, #-9		; digit <= 9?
 	BRnz HEX_NUM
@@ -205,7 +203,6 @@ HEX_OUTPUT
 	ADD R0, R4, R5 		; put the correct ascii value in R0 for letter
 	ADD R0, R0, #-10
 	BRnzp PRINT
-
 HEX_NUM
 	LD R4, ZERO 		; add 0
 	ADD R0, R4, R5		; put the correct ascii value in R0 for number
@@ -216,18 +213,13 @@ PRINT
 DONE	
 	LD 	R5, SOLN
 	HALT			; done
-
 SOLN  		.BLKW #1
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;R0 - character input from keyboard
 ;R6 - current numerical output
 ;
-;
 EVALUATE
-
 ;your code goes here
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;input R3, R4
 ;out R0
@@ -244,7 +236,6 @@ MIN
 	ADD R0, R3, R4
 	JSR PUSH
 	JSR GETCHAR
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;input R3, R4
 ;out R0
