@@ -276,9 +276,11 @@ EXP
 	ADD R5, R4, #-1		; R5 exploop counter
 	BRz EXPBASE
 	ST 	R3, ORIGR3 	
-	ST 	R3, NEWR3	
+	ST 	R3, NEWR3
+	LD  R0, ORIGR3	
 EXPLOOP
 	LD  R6, ORIGR3		; R6 inner multiply loop counter
+	ADD R6, R6, #-1
 	LD 	R3, NEWR3
 EXPLOOP2		
 		ADD R0, R0, R3
