@@ -263,11 +263,12 @@ MULZERO
 ;out R0
 DIV	
 ;your code goes here
-	NOT R3, R3
-	ADD R3, R3, #1
+	AND R0, R0, #0
+	NOT R4, R4
+	ADD R4, R4, #1
 DIVLOOP
 	ADD R0, R0, #1
-	ADD R4, R4, R3
+	ADD R3, R3, R4
 	BRzp DIVLOOP
 	ADD R0, R0, #-1
 	JSR PUSH
