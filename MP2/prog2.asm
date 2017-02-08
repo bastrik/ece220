@@ -1,6 +1,9 @@
-;
-;
-;
+; This program uses the stack to do simple arithmatic calculations ( + - * / ^)
+; by evaluating postfix expressions. Note that this program does not handle stack
+; overflows and will terminate when stack underflows.
+; Program will loop and accept user input until semicolon is entered, which then
+; the program will output the answer in HEX base on the input
+
 .ORIG x3000
 	AND R0, R0, #0
 	AND R1, R1, #0
@@ -102,7 +105,7 @@ EVALNUM
 
 PUSHNUM
 	LD R1, OFFSET
-	ADD R0, R0, R1
+	ADD R0, R0, R1 		; if number, change from ascii value to decimal value
 	JSR PUSH
 	JSR GETCHAR
 
@@ -149,25 +152,25 @@ POP_EXP
 	BRp INVALID
 	JSR EXP
 POP_LINE
-	JSR POP
+	JSR POP 			; semicolon is input
 	ADD R1, R5, #0
 	BRp INVALID
-FINISHED
+FINISHED 				; print answer to terminal
 	ADD R5, R0, #0
 	JSR PRINT_HEX
 	JSR DONE
 
 INVALID
-	LEA R0, ERR
+	LEA R0, ERR 		; if expression is invalid
 	PUTS
 	JSR DONE
 
 
-PLUSASCII 	.FILL x002B
-MINUSASCII 	.FILL x002D
-MULTIASCII  .FILL x002A
-DIVASCII 	.FILL x002F
-EXPASCII 	.FILL x005E
+PLUSASCII 	.FILL x002B ; "+"
+MINUSASCII 	.FILL x002D ; "-"
+MULTIASCII  .FILL x002A ; "*"
+DIVASCII 	.FILL x002F ; "/"
+EXPASCII 	.FILL x005E ; "^"
 ERR 		.STRINGZ "Invalid Expression"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;R3- value to print in hexadecimal
@@ -211,7 +214,7 @@ PRINT
 	ADD R6, R6, #1
 	BRnzp HEX_LOOP
 DONE	
-	LD 	R5, SOLN
+	LD 	R5, SOLN 	; restore R5
 	HALT			; done
 SOLN  		.BLKW #1
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -219,19 +222,19 @@ SOLN  		.BLKW #1
 ;R6 - current numerical output
 ;
 EVALUATE
-;your code goes here
+;evaluate code is written above ^^^
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;input R3, R4
 ;out R0
 PLUS	
-	ADD R0, R3, R4
+	ADD R0, R3, R4 		; self explanatory
 	JSR PUSH
 	JSR GETCHAR	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;input R3, R4
 ;out R0
 MIN	
-	NOT R4, R4
+	NOT R4, R4 			; 2's complement subtraction
 	ADD R4, R4, #1
 	ADD R0, R3, R4
 	JSR PUSH
@@ -241,10 +244,10 @@ MIN
 ;out R0
 MUL	
 	ADD R0, R4, #0
-	BRz MULZERO
+	BRz MULZERO 		; output zero if R4 = 0
 	AND R0, R0, #0
 MULLOOP
-		ADD R0, R0, R3
+		ADD R0, R0, R3 	; R3 + itself R4 times
 		ADD R4, R4, #-1
 		BRp MULLOOP
 MULZERO
@@ -258,7 +261,7 @@ DIV
 	NOT R4, R4
 	ADD R4, R4, #1
 DIVLOOP
-	ADD R0, R0, #1
+	ADD R0, R0, #1 		; count the times r3 - r4 before negative
 	ADD R3, R3, R4
 	BRzp DIVLOOP
 	ADD R0, R0, #-1
@@ -269,21 +272,21 @@ DIVLOOP
 ;out R0
 EXP
 	ADD R3, R3, #0
-	BRz EXPZERO
+	BRz EXPZERO 		; 0^x = 0
 	ADD R4, R4, #0
-	BRz EXPONE
+	BRz EXPONE 			; x^0 = 1
 	AND R0, R0, #0
 	ADD R5, R4, #-1		; R5 exploop counter
 	BRz EXPBASE
 	ST 	R3, ORIGR3 	
 	ST 	R3, NEWR3
-	LD  R0, ORIGR3	
+	LD  R0, ORIGR3		; start with r0 = r3
 EXPLOOP
 	LD  R6, ORIGR3		; R6 inner multiply loop counter
 	ADD R6, R6, #-1
 	LD 	R3, NEWR3
 EXPLOOP2		
-		ADD R0, R0, R3
+		ADD R0, R0, R3 	; modified multiply loop
 		ST R0, NEWR3
 		ADD R6, R6, #-1		
 		BRp EXPLOOP2
