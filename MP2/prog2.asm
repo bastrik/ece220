@@ -289,12 +289,15 @@ EXP
 	AND R0, R0, #0
 	ADD R5, R4, #-1		; R5 exploop counter
 	BRz EXPBASE
-	ST 	R3, ORIGR3 		
+	ST 	R3, ORIGR3 	
+	ST 	R3, NEWR3	
 EXPLOOP
 	LD  R6, ORIGR3		; R6 inner multiply loop counter
+	LD 	R3, NEWR3
 EXPLOOP2		
 		ADD R0, R0, R3
 		ADD R6, R6, #-1
+		ST R0, NEWR3
 		BRp EXPLOOP2
 	ADD R5, R5, #-1
 	BRp EXPLOOP	
@@ -314,6 +317,7 @@ EXPBASE
 	JSR PUSH
 	JSR GETCHAR
 ORIGR3 		.BLKW #1
+NEWR3		.BLKW #1
 
 A 			.FILL x0041
 ZERO 		.FILL x0030
