@@ -177,8 +177,6 @@ ERR 		.STRINGZ "Invalid Expression"
 ; R5 digit
 ; R6 digit counter
 PRINT_HEX
-	LD R0, X
-	OUT
 	ADD R3, R5, #0
 	AND R6, R6, #0 		; reset digit counter
 HEX_LOOP
@@ -265,11 +263,11 @@ MULZERO
 ;out R0
 DIV	
 ;your code goes here
-	NOT R4, R4
-	ADD R4, R4, #1
+	NOT R3, R3
+	ADD R3, R3, #1
 DIVLOOP
 	ADD R0, R0, #1
-	ADD R3, R3, R4
+	ADD R4, R4, R3
 	BRzp DIVLOOP
 	ADD R0, R0, #-1
 	JSR PUSH
@@ -311,7 +309,6 @@ EXPONE
 	JSR PUSH
 	JSR GETCHAR
 
-X 			.FILL x0078
 A 			.FILL x0041
 ZERO 		.FILL x0030
 ONE 		.FILL x0031
