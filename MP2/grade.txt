@@ -37,7 +37,7 @@ PC=x0494 IR=xB1AE PSR=x0400 (ZERO)
 R0=x0000 R1=x7FFF R2=x0000 R3=x0000 R4=x0000 R5=x000C R6=x0004 R7=x0490 
                    x0494 x0FF9 BRNZP TRAP_HALT
 
-Test 2 (10 pts) Answer = invalid: 1 2 3 4 +
+Test 2 (5 pts) Answer = Invalid Expression: 1 2 3 4 +
 
 Welcome to the LC-3 simulator.
 
@@ -69,7 +69,7 @@ PC=x0494 IR=xB1AE PSR=x0400 (ZERO)
 R0=x0000 R1=x7FFF R2=x0000 R3=x0000 R4=x0000 R5=x0007 R6=x0004 R7=x0490 
                    x0494 x0FF9 BRNZP TRAP_HALT
 
-Test 3 (10 pts) Answer = invalid: 1 2 + + +
+Test 3 (5 pts) Answer = Invalid Expression: 1 2 + + +
 
 Welcome to the LC-3 simulator.
 
@@ -166,7 +166,7 @@ PC=x0494 IR=xB1AE PSR=x0400 (ZERO)
 R0=x0000 R1=x7FFF R2=x0000 R3=x0000 R4=x0000 R5=x001C R6=x0004 R7=x0490 
                    x0494 x0FF9 BRNZP TRAP_HALT
 
-Test 6 (5 pts) Answer = x2: 4 2 /
+Test 6 (10 pts) Answer = x2: 4 2 /
 
 Welcome to the LC-3 simulator.
 
@@ -198,7 +198,7 @@ PC=x0494 IR=xB1AE PSR=x0400 (ZERO)
 R0=x0000 R1=x7FFF R2=x0000 R3=x0000 R4=x0000 R5=x0002 R6=x0004 R7=x0490 
                    x0494 x0FF9 BRNZP TRAP_HALT
 
-Test 7 (5 pts) Answer = x0: 1 2 /
+Test 7 (10 pts) Answer = x0: 1 2 /
 
 Welcome to the LC-3 simulator.
 
