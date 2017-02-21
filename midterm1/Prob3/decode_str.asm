@@ -1,0 +1,172 @@
+.ORIG x3000
+;register usage
+; R1 - addr
+; R2 - 
+; R3 - repeat n times
+
+	LD  R1, STRING_START
+	ADD R1, R1, #-1
+START
+	ADD R1, R1, #1
+	LDR R0, R1, #0
+	ADD R0, R0, #0
+	BRz DONE
+
+	ADD R2, R0, #0
+	LD  R3, ZERO
+	NOT R3, R3
+	ADD R3, R3, #1
+	ADD R2, R2, R3
+	BRz SET0
+
+	ADD R2, R0, #0
+	LD  R3, ONE
+	NOT R3, R3
+	ADD R3, R3, #1
+	ADD R2, R2, R3
+	BRz SET1
+
+	ADD R2, R0, #0
+	LD  R3, TWO
+	NOT R3, R3
+	ADD R3, R3, #1
+	ADD R2, R2, R3
+	BRz SET2
+
+	ADD R2, R0, #0
+	LD  R3, THREE
+	NOT R3, R3
+	ADD R3, R3, #1
+	ADD R2, R2, R3
+	BRz SET3
+
+	ADD R2, R0, #0
+	LD  R3, FOUR
+	NOT R3, R3
+	ADD R3, R3, #1
+	ADD R2, R2, R3
+	BRz SET4
+
+	ADD R2, R0, #0
+	LD  R3, FIVE
+	NOT R3, R3
+	ADD R3, R3, #1
+	ADD R2, R2, R3
+	BRz SET5
+
+	ADD R2, R0, #0
+	LD  R3, SIX
+	NOT R3, R3
+	ADD R3, R3, #1
+	ADD R2, R2, R3
+	BRz SET6
+
+	ADD R2, R0, #0
+	LD  R3, SEVEN
+	NOT R3, R3
+	ADD R3, R3, #1
+	ADD R2, R2, R3
+	BRz SET7
+
+	ADD R2, R0, #0
+	LD  R3, EIGHT
+	NOT R3, R3
+	ADD R3, R3, #1
+	ADD R2, R2, R3
+	BRz SET8
+
+	ADD R2, R0, #0
+	LD  R3, NINE
+	NOT R3, R3
+	ADD R3, R3, #1
+	ADD R2, R2, R3
+	BRz SET9
+
+	OUT
+	BR START
+
+CHARLOOP
+	LD  R5, ASCII_NEG_ASTERISK
+	ADD R1, R1, #1	;START
+	ST R1, STARTLOC
+INNER
+	LD  R1, STARTLOC
+STEP	LDR R0, R1, #0
+	ADD R2, R0, R5
+	BRz INCR
+	OUT
+	ADD R1, R1, #1
+	BR STEP
+INCR	ADD R3, R3, #-1
+	BRz START
+	BR  INNER
+
+STARTLOC 	.BLKW #1
+ZEROLOOP
+	LD  R5, ASCII_NEG_ASTERISK
+	ADD R1, R1, #1
+	LDR R0, R1, #0
+	ADD R0, R0, R5
+	BRz START
+	BR  ZEROLOOP
+
+SET0
+	AND R3, R3, 0
+	ADD R3, R3, #0
+	BR ZEROLOOP
+SET1
+	AND R3, R3, 0
+	ADD R3, R3, #1
+	BR CHARLOOP
+SET2
+	AND R3, R3, 0
+	ADD R3, R3, #2
+	BR CHARLOOP
+SET3
+	AND R3, R3, 0
+	ADD R3, R3, #3
+	BR CHARLOOP
+SET4
+	AND R3, R3, 0
+	ADD R3, R3, #4
+	BR CHARLOOP
+SET5
+	AND R3, R3, 0
+	ADD R3, R3, #5
+	BR CHARLOOP
+SET6
+	AND R3, R3, 0
+	ADD R3, R3, #6
+	BR CHARLOOP
+SET7
+	AND R3, R3, 0
+	ADD R3, R3, #7
+	BR CHARLOOP
+SET8
+	AND R3, R3, 0
+	ADD R3, R3, #8
+	BR CHARLOOP
+SET9
+	AND R3, R3, 0
+	ADD R3, R3, #9
+	BR CHARLOOP
+
+DONE
+	HALT
+
+
+ZERO		.FILL x0030		;ASCII value of Zero
+ONE		.FILL x0031		;ASCII value of Zero
+TWO		.FILL x0032		;ASCII value of Zero
+THREE		.FILL x0033		;ASCII value of Zero
+FOUR		.FILL x0034		;ASCII value of Zero
+FIVE		.FILL x0035		;ASCII value of Zero
+SIX		.FILL x0036		;ASCII value of Zero
+SEVEN		.FILL x0037		;ASCII value of Zero
+EIGHT		.FILL x0038		;ASCII value of Zero
+NINE		.FILL x0039		;ASCII value of Nine
+ASCII_NEG_ASTERISK   	.FILL xFFD6  		;negative of ascii value of *
+ASCII_NEG_ZERO    	.FILL xFFD0		;negative of ascii value of 0
+STRING_START 		.FILL x4000		;starting address of string
+ENDLINE			.FILL X000A
+.END

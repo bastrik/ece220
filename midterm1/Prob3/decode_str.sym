@@ -1,0 +1,37 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	START             3002
+//	CHARLOOP          3044
+//	INNER             3047
+//	STEP              3048
+//	INCR              304E
+//	STARTLOC          3051
+//	ZEROLOOP          3052
+//	SET0              3058
+//	SET1              305B
+//	SET2              305E
+//	SET3              3061
+//	SET4              3064
+//	SET5              3067
+//	SET6              306A
+//	SET7              306D
+//	SET8              3070
+//	SET9              3073
+//	DONE              3076
+//	ZERO              3077
+//	ONE               3078
+//	TWO               3079
+//	THREE             307A
+//	FOUR              307B
+//	FIVE              307C
+//	SIX               307D
+//	SEVEN             307E
+//	EIGHT             307F
+//	NINE              3080
+//	ASCII_NEG_ASTERISK  3081
+//	ASCII_NEG_ZERO    3082
+//	STRING_START      3083
+//	ENDLINE           3084
+

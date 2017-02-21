@@ -1,0 +1,16 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	PSquare           3000
+//	LOOP              300B
+//	MULT              300D
+//	MULTLOOP          300F
+//	COND              3012
+//	N_1               3017
+//	LOOP2             301A
+//	DONE              301D
+//	saveR4            3021
+//	saveR5            3022
+//	saveR6            3023
+
