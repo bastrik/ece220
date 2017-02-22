@@ -330,6 +330,6 @@ Grade:
 ******
 Late submission: 0
 Functionality: 85
-Comments and Style: 
-Intro paragraph: 
-Total: 
+Comments and Style: 5
+Intro paragraph: 5
+Total: 95
