@@ -44,69 +44,50 @@ BITMASK .FILL x0003	; set n = 3
 ;Please write ALL your code for BITSWAP in between the separations lines,
 ;including all the labels, code, and .FILL commands
 
-
+ 
 ;Subroutine to swap bits
-;Input:
-;R0: the ascii that to be swapped
+;Input: 
+;R0: the ascii that to be swapped 
 ;R1: the number of bits to be swapped
-; You can assume R1 is always 0, 1, 2, 3, or 4
+; You can assume R1 is always 0, 1, 2, or 3
 ;Output: R0, the swapped ascii
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Local register usage
+; R1 - n
+; R2 - low n bits
+; R3 - middle 8-(2n) bits
+; R4 - high n bits
+; R5 - 8-n
+
 BITSWAP
-;;YOUR CODE STARTS HERE
+	ST  R0, storeR0
+	ADD R1, R1, #0
+	BRz SKIP
+	JSR EXTRACT
+	ADD R2, R0, #0
+	LD R0, storeR0
+	ADD R5, R1, #0
+	NOT R5, R5
+	ADD R5, R5, #1
+	ADD R5, R5, #8 		;R5 = -n + 8
 
-;HOW DO YOU FUCK UP THIS BADLY WITH YOUR PROGRAM DESIGN? WINDOWS NEWLINES?
-;Extract n least significant bits with 8-R1 bitshits left
-	ST R0,INIT_VALUE_R0
-	ST R2,SWAP_R2
-	ST R3,SWAP_R3
-	ST R4,SWAP_R4
-	ST R7,SWAP_R7
+LEFTSHIFTLOOP
+	ADD R0, R0, R0
+	ADD R5, R5, #-1
+	BRp LEFTSHIFTLOOP
 
-	NOT R2,R1
-	ADD R2,R2,#1 ;R2 <- -R1
-	ADD R2,R2,#8 ;R2 = number of shits to give
-	;Number of shits will always be at least 4
+	ADD R4, R0, #0
+	AND R0, R0, #0
+	ADD R0, R2, R4
+	ADD R0, R0, R3
+	BR  BITDONE
 
-	TOP_LOOP
-		ADD R0,R0,R0 ;Do a single bit shit
-		ADD R2,R2,#-1 ;Do R2 bit shits
-		BRp TOP_LOOP
+SKIP
+	LD R0, storeR0
+BITDONE
+	RET
 
-	LD R2,CLEAR_0
-	AND R3,R0,R2 ;Wipe out higher bits, store result in R3
-	;R1 has not been modified up to this point
-	;Figure out which value (0-4) and load appropriate clear mask
-	LEA R2,CLEAR_0
-	ADD R2,R2,R1 ;R2 contains correct address
-	LDR R2,R2,#0 ;R2 now contains actual mask
-	
-	LD R0,INIT_VALUE_R0
-	AND R4,R0,R2 ;Store central bits in R4
-	JSR EXTRACT ;Using original values of R0 and R1
-	
-	;R0 now contains the last part of the encrypted pattern
-	;Combine R0,R3,R4 with straight addition (all only have intended bits)
-	;Store result in R0
-	ADD R0,R0,R3
-	ADD R0,R0,R4
-
-	;R1 never modified
-	LD R2,SWAP_R2
-	LD R3,SWAP_R3
-	LD R4,SWAP_R4
-	LD R7,SWAP_R7
-	ret
-
-SWAP_R2 .FILL #0
-SWAP_R3 .FILL #0
-SWAP_R4 .FILL #0
-SWAP_R7 .FILL #0
-INIT_VALUE_R0 .FILL #0
-CLEAR_0 .FILL x00FF
-CLEAR_1 .FILL x007E
-CLEAR_2 .FILL x003C
-CLEAR_3 .FILL x0018
-CLEAR_4 .FILL x0000
+storeR0		.BLKW #1
 
 ;You must not change the separation line below.
 ;Write all your code for BITSWAP above this line
