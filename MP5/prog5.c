@@ -4,7 +4,11 @@
  *           student code -- GOLD VERSION by Steven S. Lumetta
  */
 
-
+/*
+ * Code breaking game - user enter a seed and try to guess the randomly generated 4 numbers in order. User has 12 chances
+ * to guess the 4 numbers. With each valid guess the user will get feedback (perfect guess, misplaced guess) for each of
+ * the 4 digits. Game ends when either user correctly guessed the 4 numbers or when user guessed 12 times incorrectly.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -36,19 +40,14 @@ int
 set_seed (const char seed_str[])
 {
 	int num = 0;
-	char term[2];
-	if (sscanf(seed_str, "%d%1s", &num, term) != 1)
-	{
-		printf("set_seed: invalid seed\n");
-		return 0;
-	}
-	else if (term[0] != 0 && term[1] == 0)
+	char term;
+	if (sscanf(seed_str, "%d%1s", &num, &term) != 1) 	// if more than 1 int input detected, invalid guess
 	{
 		printf("set_seed: invalid seed\n");
 		return 0;
 	}		
 	
-	num = abs(num);
+	num = abs(num);		// convert negative seed to positive seed
 	srand(num);
 	
     return 1;
@@ -73,7 +72,7 @@ set_seed (const char seed_str[])
 void
 start_game (int* one, int* two, int* three, int* four)
 {
-    guess_number = 1;
+    guess_number = 1;			// init solution and guess #
     *one = rand() % 8 + 1;
     solution1 = *one;
     *two = rand() % 8 + 1;
@@ -120,12 +119,12 @@ make_guess (const char guess_str[], int* one, int* two,
 	int c = 0;
 	int d = 0;
 
-	if (sscanf(guess_str, "%d%d%d%d%c", &w, &x, &y, &z, &term) != 4)
+	if (sscanf(guess_str, "%d%d%d%d%c", &w, &x, &y, &z, &term) != 4)	// if didn't get 4 int, invalid guess
 	{
 		printf("make_guess: invalid guess\n");
 		return 0;
 	}		
-	else if (w < 1 || w > 8 || x < 1 || x > 8 || y < 1 || y > 8 || z < 1 || z > 8)
+	else if (w < 1 || w > 8 || x < 1 || x > 8 || y < 1 || y > 8 || z < 1 || z > 8)		// 0 < guess < 9
 	{
 		printf("make_guess: invalid guess\n");
 		return 0;
