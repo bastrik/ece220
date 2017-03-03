@@ -5,24 +5,11 @@
  */
 
 
-/*
- * The functions that you must write are defined in the header file.
- * Blank function prototypes with explanatory headers are provided
- * in this file to help you get started.
- */
-
-
-
 #include <stdio.h>
 #include <stdlib.h>
 
 #include "prog5.h"
 
-
-/*
- * You will need to keep track of the solution code using file scope
- * variables as well as the guess number.
- */
 
 static int guess_number;
 static int solution1;
@@ -48,22 +35,19 @@ static int solution4;
 int
 set_seed (const char seed_str[])
 {
-//    Example of how to use sscanf to read a single integer and check for anything other than the integer
-//    "int seed" will contain the number typed by the user (if any) and the string "post" will contain anything after the integer
-//    The user should enter only an integer, and nothing else, so we will check that only "seed" is read. 
-//    We declare
-//    int seed;
-//    char post[2];
-//    The sscanf statement below reads the integer into seed. 
-//    sscanf (seed_str, "%d%1s", &seed, post)
-//    If there is no integer, seed will not be set. If something else is read after the integer, it will go into "post".
-//    The return value of sscanf indicates the number of items read succesfully.
-//    When the user has typed in only an integer, only 1 item should be read sucessfully. 
-//    Check that the return value is 1 to ensure the user enters only an integer. 
-//    Feel free to uncomment these statements, modify them, or delete these comments as necessary. 
-//    You may need to change the return statement below
-   
-    return 0;
+	int num = 0;
+	char term;
+	if (sscanf(seed_str, "%d%c", &num, &term) != 2 || term != '\n')
+	{
+		printf("set_seed: invalid seed\n");
+		return 0;
+	}		
+	
+	num = (unsigned) num;
+	printf("setting: %d\n", num);
+	srand(num);
+	
+    return 1;
 }
 
 
@@ -85,8 +69,16 @@ set_seed (const char seed_str[])
 void
 start_game (int* one, int* two, int* three, int* four)
 {
-    //your code here
-    
+    guess_number = 1;
+    *one = rand() % 8 + 1;
+    *two = rand() % 8 + 1;
+    *three = rand() % 8 + 1;
+    *four = rand() % 8 + 1;
+    solution1 = *one;
+    solution2 = *two;
+    solution3 = *three;
+    solution4 = *four;
+    printf("%d%d%d%d\n", solution1,solution2,solution3,solution4);
 }
 
 /*
@@ -116,16 +108,63 @@ int
 make_guess (const char guess_str[], int* one, int* two, 
 	    int* three, int* four)
 {
-//  One thing you will need to read four integers from the string guess_str, using a process
-//  similar to set_seed
-//  The statement, given char post[2]; and four integers w,x,y,z,
-//  sscanf (guess_str, "%d%d%d%d%1s", &w, &x, &y, &z, post)
-//  will read four integers from guess_str into the integers and read anything else present into post
-//  The return value of sscanf indicates the number of items sucessfully read from the string.
-//  You should check that exactly four integers were sucessfully read.
-//  You should then check if the 4 integers are between 1-8. If so, it is a valid guess
-//  Otherwise, it is invalid.  
-//  Feel free to use this sscanf statement, delete these comments, and modify the return statement as needed
+	int w,x,y,z;
+	char term;
+	int correct = 0;
+	int misplaced = 0;
+	int a = 0;	// a,b,c,d used as boolean values
+	int b = 0;
+	int c = 0;
+	int d = 0;
+
+	if (sscanf(guess_str, "%d%d%d%d%c", &w, &x, &y, &z, &term) != 5 || term != '\n')
+	{
+		printf("make_guess: invalid guess\n");
+		return 0;
+	}		
+	else if (w < 1 || w > 8 || x < 1 || x > 8 || y < 1 || y > 8 || z < 1 || z > 8)
+	{
+		printf("make_guess: invalid guess\n");
+		return 0;
+	}
+
+	*one = w;
+	*two = x;
+	*three = y;
+	*four = z;
+
+	if (solution1 == w) 	// these check for correct placements
+	{
+		a = 1;
+		correct++;
+	} 
+	if (solution2 == x)
+	{
+		b = 1;
+		correct++;
+	}
+	if (solution3 == y)
+	{
+		c = 1;
+		correct++;
+	}
+	if (solution4 == z)
+	{
+		d = 1;
+		correct++;
+	}
+							// these check for misplaced
+	if ((a == 0) && ((b == 0 && w == solution2) || (c == 0 && w == solution3) || (d == 0 && w == solution4)))
+		misplaced++;
+	if ((b == 0) && ((a == 0 && x == solution1) || (c == 0 && x == solution3) || (d == 0 && x == solution4)))
+		misplaced++;
+	if ((c == 0) && ((b == 0 && y == solution2) || (a == 0 && y == solution1) || (d == 0 && y == solution4)))
+		misplaced++;
+	if ((d == 0) && ((b == 0 && z == solution2) || (c == 0 && z == solution3) || (a == 0 && z == solution1)))
+		misplaced++;
+
+	printf("With guess %d, you got %d perfect matches and %d misplaced matches.\n", guess_number, correct, misplaced);
+	guess_number++;
     return 1;
 }
 
