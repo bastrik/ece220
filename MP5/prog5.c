@@ -36,15 +36,19 @@ int
 set_seed (const char seed_str[])
 {
 	int num = 0;
-	char term;
-	if (sscanf(seed_str, "%d%c", &num, &term) != 2 || term != '\n')
+	char term[2];
+	if (sscanf(seed_str, "%d%1s", &num, term) != 1)
+	{
+		printf("set_seed: invalid seed\n");
+		return 0;
+	}
+	else if (term[0] != 0 && term[1] == 0)
 	{
 		printf("set_seed: invalid seed\n");
 		return 0;
 	}		
 	
-	num = (unsigned) num;
-	printf("setting: %d\n", num);
+	num = abs(num);
 	srand(num);
 	
     return 1;
@@ -71,14 +75,13 @@ start_game (int* one, int* two, int* three, int* four)
 {
     guess_number = 1;
     *one = rand() % 8 + 1;
-    *two = rand() % 8 + 1;
-    *three = rand() % 8 + 1;
-    *four = rand() % 8 + 1;
     solution1 = *one;
+    *two = rand() % 8 + 1;
     solution2 = *two;
+    *three = rand() % 8 + 1;
     solution3 = *three;
+    *four = rand() % 8 + 1;
     solution4 = *four;
-    printf("%d%d%d%d\n", solution1,solution2,solution3,solution4);
 }
 
 /*
@@ -117,7 +120,7 @@ make_guess (const char guess_str[], int* one, int* two,
 	int c = 0;
 	int d = 0;
 
-	if (sscanf(guess_str, "%d%d%d%d%c", &w, &x, &y, &z, &term) != 5 || term != '\n')
+	if (sscanf(guess_str, "%d%d%d%d%c", &w, &x, &y, &z, &term) != 4)
 	{
 		printf("make_guess: invalid guess\n");
 		return 0;
