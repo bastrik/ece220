@@ -119,7 +119,7 @@ make_guess (const char guess_str[], int* one, int* two,
 	int c = 0;
 	int d = 0;
 
-	if (sscanf(guess_str, "%d%d%d%d%c", &w, &x, &y, &z, &term) != 4)	// if didn't get 4 int, invalid guess
+	if (sscanf(guess_str, "%d%d%d%d%1s", &w, &x, &y, &z, &term) != 4)	// if didn't get 4 int, invalid guess
 	{
 		printf("make_guess: invalid guess\n");
 		return 0;
