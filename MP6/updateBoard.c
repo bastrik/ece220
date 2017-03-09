@@ -85,7 +85,7 @@ void updateBoard(int* board, int boardRowSize, int boardColSize) {
 	memcpy(refboard, board, len * sizeof(int));	
 	for (i = 0; i < len; i++)
 	{
-		r = i / boardRowSize;
+		r = i / boardColSize;
 		c = i % boardColSize;
 		currNeighbor = countLiveNeighbor(board, boardRowSize, boardColSize, r, c);
 		if(board[i])
