@@ -76,9 +76,9 @@ int countLiveNeighbor(int* board, int boardRowSize, int boardColSize, int row, i
 void updateBoard(int* board, int boardRowSize, int boardColSize) {
 	int i, len, curr;
 	int r, c;
-	int* refboard = malloc(len * sizeof(int));
-	memcpy(refboard, board, len * sizeof(int));
 	len = boardRowSize * boardColSize;
+	int* refboard = malloc(len * sizeof(int));
+	memcpy(refboard, board, len * sizeof(int));	
 	for (i = 0; i < len; i++)
 	{
 		r = i / boardRowSize;
