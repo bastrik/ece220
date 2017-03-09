@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <string.h>
+#include "updateBoard.h"
 /*
  * countLiveNeighbor
  * Inputs:
@@ -14,13 +17,13 @@
 
 int countLiveNeighbor(int* board, int boardRowSize, int boardColSize, int row, int col)
 {
-	int boardRowSize = r;
-	int boardColSize = c;
+	int r = boardRowSize;
+	int c = boardColSize;
 	if (row == 0)
 	{
 		if (col == 0)						// top left corner
 		{
-			return(isAlive(r,c, board, 0, 1) + isAlive(r,c, board, row+1 , 0) + isAlive(r,c, board, row+1, col+1));
+			//return(isAlive(r,c, board, 0, 1) + isAlive(r,c, board, row+1 , 0) + isAlive(r,c, board, row+1, col+1));
 		} else if (col == boardColSize)		// top right corner
 		{
 			return(isAlive(r,c, board, 0, col-1) + isAlive(r,c, board, row+1 , col) + isAlive(r,c, board, row-1, col-1));
@@ -48,12 +51,12 @@ int countLiveNeighbor(int* board, int boardRowSize, int boardColSize, int row, i
 
 	if (col == 0)							// left colomn not corner
 	{
-		return(isAlove(r,c, board, row-1, col) + isAlove(r,c, board, row+1, col) + 
-			isAlove(r,c, board, row-1, col+1) + isAlove(r,c, board, row, col+1) + isAlove(r,c, board, row+1, col+1));
+		return(isAlive(r,c, board, row-1, col) + isAlive(r,c, board, row+1, col) + 
+			isAlive(r,c, board, row-1, col+1) + isAlive(r,c, board, row, col+1) + isAlive(r,c, board, row+1, col+1));
 	} else if (col == boardColSize)
 	{
-		return(isAlove(r,c, board, row-1, col) + isAlove(r,c, board, row+1, col) + 
-			isAlove(r,c, board, row-1, col-1) + isAlove(r,c, board, row, col-1) + isAlove(r,c, board, row+1, col-1));
+		return(isAlive(r,c, board, row-1, col) + isAlive(r,c, board, row+1, col) + 
+			isAlive(r,c, board, row-1, col-1) + isAlive(r,c, board, row, col-1) + isAlive(r,c, board, row+1, col-1));
 	}
 	// not edge case
 	return(isAlive(r,c, board, row-1, col-1) + isAlive(r,c, board, row-1, col) + isAlive(r,c, board, row-1, col+1) + 
@@ -109,12 +112,21 @@ void updateBoard(int* board, int boardRowSize, int boardColSize) {
  * current step or there is no alive cells at all.
  * return 0 if the alive cells change for the next step.
  */ 
-int aliveStable(int b, int c, int* board, int boardRowSize, int boardColSize){
+int aliveStable(int* board, int boardRowSize, int boardColSize){
+	int len;
+	len = boardRowSize * boardColSize;
+	int* newboard = malloc(len * sizeof(int));
+	memcpy(newboard, board, len * sizeof(int));
+	updateBoard(newboard, boardRowSize, boardColSize);
+
+	if (memcmp(board, newboard, sizeof(*board)) == 0)
+		return 1;
+	return 0;
 }
 
 int isAlive(int r, int c, int* board, int row, int col)
 {
-	return board(row*c + col);
+	return board[row*c + col];
 }				
 				
 			
