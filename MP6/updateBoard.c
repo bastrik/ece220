@@ -98,7 +98,7 @@ void updateBoard(int* board, int boardRowSize, int boardColSize) {
 				refboard[i] = 1;
 		}
 	}
-	board = refboard;
+	memcpy(board, refboard, len * sizeof(int));
 }
 
 /*
