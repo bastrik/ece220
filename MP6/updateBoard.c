@@ -78,7 +78,7 @@ int countLiveNeighbor(int* board, int boardRowSize, int boardColSize, int row, i
  * Output: board is updated with new values for next step.
  */
 void updateBoard(int* board, int boardRowSize, int boardColSize) {
-	int i, len, curr;
+	int i, len, currNeighbor;
 	int r, c;
 	len = boardRowSize * boardColSize;
 	int* refboard = malloc(len * sizeof(int));
@@ -87,17 +87,16 @@ void updateBoard(int* board, int boardRowSize, int boardColSize) {
 	{
 		r = i / boardRowSize;
 		c = i % boardColSize;
-		curr = board[i];
-		if(curr)
+		currNeighbor = countLiveNeighbor(board, boardRowSize, boardColSize, r, c);
+		if(board[i])
 		{
-			if(countLiveNeighbor(board, boardRowSize, boardColSize, r, c) != 2 ||
-					countLiveNeighbor(board, boardRowSize, boardColSize, r, c) != 3)
+			if(currNeighbor != 2 && currNeighbor != 3)
 
 				refboard[i] = 0;
 		}
 		else
 		{
-			if(countLiveNeighbor(board, boardRowSize, boardColSize, r, c) == 3)
+			if(currNeighbor == 3)
 
 				refboard[i] = 1;
 		}
