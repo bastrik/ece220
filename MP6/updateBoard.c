@@ -116,7 +116,7 @@ int aliveStable(int* board, int boardRowSize, int boardColSize){
 	memcpy(newboard, board, len * sizeof(int));
 	updateBoard(newboard, boardRowSize, boardColSize);
 
-	if (memcmp(board, newboard, sizeof(*board)) == 0)
+	if (memcmp(board, newboard, len* sizeof(int)) == 0)
 		return 1;
 	return 0;
 }
