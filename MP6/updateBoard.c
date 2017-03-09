@@ -82,21 +82,18 @@ void updateBoard(int* board, int boardRowSize, int boardColSize) {
 		r = i / boardRowSize;
 		c = i % boardColSize;
 		curr = board[i];
-		switch(curr)
+		if(curr)
 		{
-			case 0:
-				if(countLiveNeighbor(board, boardRowSize, boardColSize, r, c) == 3)
-				{
-					board[i] = 1;
-					break;
-				}
-			case 1:
-				if(countLiveNeighbor(board, boardRowSize, boardColSize, r, c) != 2 ||
+			if(countLiveNeighbor(board, boardRowSize, boardColSize, r, c) != 2 ||
 					countLiveNeighbor(board, boardRowSize, boardColSize, r, c) != 3)
-				{
-					board[i] = 0;
-					break;
-				}
+
+				board[i] = 0;
+		}
+		else
+		{
+			if(countLiveNeighbor(board, boardRowSize, boardColSize, r, c) == 3)
+
+				board[i] = 1;
 		}
 	}
 }
