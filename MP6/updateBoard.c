@@ -1,3 +1,11 @@
+/*
+ *	This class contains the functions necessary to update the game board. It allows checking for live neighbors for a given cell
+ *	loops through the board and updates the board, and can detect when the game has entered a stable state i.e no more changes.
+ *  This class completes the logic of Game of Life.
+ * 	My implementation makes use of standard library functions (malloc, memcpy, memcmp) 
+ */
+
+
 #include <stdlib.h>
 #include <string.h>
 #include "updateBoard.h"
@@ -82,26 +90,26 @@ void updateBoard(int* board, int boardRowSize, int boardColSize) {
 	int r, c;
 	len = boardRowSize * boardColSize;
 	int* refboard = malloc(len * sizeof(int));
-	memcpy(refboard, board, len * sizeof(int));	
+	memcpy(refboard, board, len * sizeof(int));		// perserve current board 
 	for (i = 0; i < len; i++)
 	{
-		r = i / boardColSize;
-		c = i % boardColSize;
+		r = i / boardColSize;		// get row number
+		c = i % boardColSize;		// get col number
 		currNeighbor = countLiveNeighbor(board, boardRowSize, boardColSize, r, c);
-		if(board[i])
+		if(board[i])				// current cell = 1
 		{
 			if(currNeighbor != 2 && currNeighbor != 3)
 
 				refboard[i] = 0;
 		}
-		else
+		else						// current cell = 0
 		{
 			if(currNeighbor == 3)
 
 				refboard[i] = 1;
 		}
 	}
-	memcpy(board, refboard, len * sizeof(int));
+	memcpy(board, refboard, len * sizeof(int));		// write the updated board to board
 }
 
 /*
@@ -118,15 +126,16 @@ void updateBoard(int* board, int boardRowSize, int boardColSize) {
 int aliveStable(int* board, int boardRowSize, int boardColSize){
 	int len;
 	len = boardRowSize * boardColSize;
-	int* newboard = malloc(len * sizeof(int));
+	int* newboard = malloc(len * sizeof(int));			// make a new board
 	memcpy(newboard, board, len * sizeof(int));
-	updateBoard(newboard, boardRowSize, boardColSize);
+	updateBoard(newboard, boardRowSize, boardColSize);	// update the new board
 
-	if (memcmp(board, newboard, len* sizeof(int)) == 0)
+	if (memcmp(board, newboard, len* sizeof(int)) == 0)	// if new board = board, we are done
 		return 1;
 	return 0;
 }
 
+// helper function to determine if a cell is alive
 int isAlive(int r, int c, int* board, int row, int col)
 {
 	return board[row*c + col];
