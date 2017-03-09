@@ -113,14 +113,14 @@ void updateBoard(int* board, int boardRowSize, int boardColSize) {
  * return 0 if the alive cells change for the next step.
  */ 
 int aliveStable(int* board, int boardRowSize, int boardColSize){
-	int len;
+/*	int len;
 	len = boardRowSize * boardColSize;
 	int* newboard = malloc(len * sizeof(int));
 	memcpy(newboard, board, len * sizeof(int));
 	updateBoard(newboard, boardRowSize, boardColSize);
 
 	if (memcmp(board, newboard, len* sizeof(int)) == 0)
-		return 1;
+		return 1; */
 	return 0;
 }
 
