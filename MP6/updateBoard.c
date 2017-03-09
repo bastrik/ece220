@@ -24,7 +24,7 @@ int countLiveNeighbor(int* board, int boardRowSize, int boardColSize, int row, i
 		if (col == 0)						// top left corner
 		{
 			return(isAlive(r,c, board, 0, 1) + isAlive(r,c, board, row+1 , 0) + isAlive(r,c, board, row+1, col+1));
-		} else if (col == boardColSize)		// top right corner
+		} else if (col == boardColSize-1)		// top right corner
 		{
 			return(isAlive(r,c, board, 0, col-1) + isAlive(r,c, board, row+1 , col) + isAlive(r,c, board, row-1, col-1));
 		}else 								// top row not corner
@@ -33,12 +33,12 @@ int countLiveNeighbor(int* board, int boardRowSize, int boardColSize, int row, i
 				isAlive(r,c, board, 1, col-1) + isAlive(r,c, board, 1, col+1) +isAlive(r,c, board, 1 , col));
 		}
 	}
-	if (row == boardRowSize)
+	if (row == boardRowSize-1)
 	{
 		if (col == 0)						// bottom left corner
 		{
 			return(isAlive(r,c, board, row-1, 0) + isAlive(r,c, board, row-1 , 1) + isAlive(r,c, board, row, 1));
-		} else if (col == boardColSize)		// bottom right corner
+		} else if (col == boardColSize-1)		// bottom right corner
 		{
 			return(isAlive(r,c, board, row-1, col) + isAlive(r,c, board, row-1 , col-1) + isAlive(r,c, board, row, col-1));
 		}else 								// bottom row not corner
@@ -53,7 +53,7 @@ int countLiveNeighbor(int* board, int boardRowSize, int boardColSize, int row, i
 	{
 		return(isAlive(r,c, board, row-1, col) + isAlive(r,c, board, row+1, col) + 
 			isAlive(r,c, board, row-1, col+1) + isAlive(r,c, board, row, col+1) + isAlive(r,c, board, row+1, col+1));
-	} else if (col == boardColSize)
+	} else if (col == boardColSize-1)
 	{
 		return(isAlive(r,c, board, row-1, col) + isAlive(r,c, board, row+1, col) + 
 			isAlive(r,c, board, row-1, col-1) + isAlive(r,c, board, row, col-1) + isAlive(r,c, board, row+1, col-1));
