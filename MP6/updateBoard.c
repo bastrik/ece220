@@ -23,7 +23,7 @@ int countLiveNeighbor(int* board, int boardRowSize, int boardColSize, int row, i
 	{
 		if (col == 0)						// top left corner
 		{
-			//return(isAlive(r,c, board, 0, 1) + isAlive(r,c, board, row+1 , 0) + isAlive(r,c, board, row+1, col+1));
+			return(isAlive(r,c, board, 0, 1) + isAlive(r,c, board, row+1 , 0) + isAlive(r,c, board, row+1, col+1));
 		} else if (col == boardColSize)		// top right corner
 		{
 			return(isAlive(r,c, board, 0, col-1) + isAlive(r,c, board, row+1 , col) + isAlive(r,c, board, row-1, col-1));
