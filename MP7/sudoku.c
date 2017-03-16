@@ -72,7 +72,7 @@ int is_val_valid(const int val, const int i, const int j, const int sudoku[9][9]
 // Solve the given sudoku instance.
 int solve_sudoku(int sudoku[9][9]) {
 
-  int val row, col;
+  int val, row, col;
   val = is_empty(sudoku, row, col);     // call helper method to find an empty cell
   if (val == 0)
   {
