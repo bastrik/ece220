@@ -97,10 +97,9 @@ int solve_sudoku(int sudoku[9][9]) {
 // helper function that solves the sudoku
 int is_empty(int sudoku[9][9], int &row, int &col)
 {
-    int i, j;
-    for (i = 0; i < 9; i++)
-        for (j = 0; j < 9; j++)
-            if (sudoku[i][j] == 0)
+    for (row = 0; row < 9; row++)
+        for (col = 0; col < 9; col++)
+            if (sudoku[row][col] == 0)
                 return 1;
     return 0;
 }
