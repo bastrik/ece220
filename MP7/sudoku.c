@@ -15,7 +15,7 @@ int is_val_in_row(const int val, const int i, const int sudoku[9][9]) {
 
   for (j = 0; j < 9; j++)
   {
-    if (soduku[i][j] == val)
+    if (sudoku[i][j] == val)
         return 1;
   }
   
@@ -31,7 +31,7 @@ int is_val_in_col(const int val, const int j, const int sudoku[9][9]) {
 
   for (i = 0; i < 9; i++)
   {
-    if (soduku[i][j] == val)
+    if (sudoku[i][j] == val)
         return 1;
   }
   
@@ -51,7 +51,7 @@ int is_val_in_3x3_zone(const int val, const int i, const int j, const int sudoku
   {
       for (c = norm_j; c < norm_j + 3; c++)
       {
-          if (soduku[r][c] == val)
+          if (sudoku[r][c] == val)
             return 1;
       }
   }
@@ -64,8 +64,8 @@ int is_val_valid(const int val, const int i, const int j, const int sudoku[9][9]
 
   assert(i>=0 && i<9 && j>=0 && j<9);
 
-  return (is_val_in_row(val, i, soduku)==0 && is_val_in_col(val, j, soduku)==0 &&
-   is_val_in_3x3_zone(val, i, j, soduku)==0);
+  return (is_val_in_row(val, i, sudoku)==0 && is_val_in_col(val, j, sudoku)==0 &&
+   is_val_in_3x3_zone(val, i, j, sudoku)==0);
 }
 
 // Procedure: solve_sudoku
@@ -73,11 +73,11 @@ int is_val_valid(const int val, const int i, const int j, const int sudoku[9][9]
 int solve_sudoku(int sudoku[9][9]) {
 
   int ret;
-  ret = solve_sudoku(soduku, 0, 0);     // call helper method to recursively solve problem
+  ret = solve_sudoku(sudoku, 0, 0);     // call helper method to recursively solve problem
 }
 
-// helper function that solves the soduku
-int solve_sudoku(int soduku[9][9], int row, int col)
+// helper function that solves the sudoku
+int solve_sudoku(int sudoku[9][9], int row, int col)
 {
     int val;
     if (row == 9)
@@ -85,31 +85,31 @@ int solve_sudoku(int soduku[9][9], int row, int col)
         return 1;
     }
 
-    if (soduku[row][col])
+    if (sudoku[row][col])
     {
         if (col == 8)
         {
-            if (solve_sudoku(soduku, row+1, 0)) return 1;
+            if (solve_sudoku(sudoku, row+1, 0)) return 1;
         }
         else {
-            if (solve_sudoku(soduku, row, col+1)) return 1;
+            if (solve_sudoku(sudoku, row, col+1)) return 1;
         }
         return 0;
     }
 
     for (val = 1; val < 10; val++)
     {
-        if (is_val_valid(val, row, col, soduku))
+        if (is_val_valid(val, row, col, sudoku))
         {
-            soduku[row][col] = val;
+            sudoku[row][col] = val;
             if (col == 8)
             {
-                if (solve_sudoku(soduku, row+1, 0)) return 1;
+                if (solve_sudoku(sudoku, row+1, 0)) return 1;
             }
             else {
-                if (solve_sudoku(soduku, row, col+1)) return 1;
+                if (solve_sudoku(sudoku, row, col+1)) return 1;
             }
-        soduku[row][col] = 0;
+        sudoku[row][col] = 0;
         }
     }
 }
