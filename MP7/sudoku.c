@@ -72,49 +72,40 @@ int is_val_valid(const int val, const int i, const int j, const int sudoku[9][9]
 // Solve the given sudoku instance.
 int solve_sudoku(int sudoku[9][9]) {
 
-  int ret;
-  ret = solve_sudoku(sudoku, 0, 0);     // call helper method to recursively solve problem
+  int val row, col;
+  val = is_empty(sudoku, row, col);     // call helper method to find an empty cell
+  if (val == 0)
+  {
+      return 1;
+  }
+
+  for (val = 1; val < 10; val++)
+  {
+    if (is_val_valid(val, row, col, sudoku))
+    {
+        sudoku[row][col] = val;
+
+        if (solve_sudoku(sudoku))
+            return 1;
+
+        sudoku[row][col] = 0;
+    }
+  }
+  return false;
 }
 
 // helper function that solves the sudoku
-int solve_sudoku(int sudoku[9][9], int row, int col)
+int is_empty(int sudoku[9][9], int &row, int &col)
 {
-    int val;
-    if (row == 9)
-    {
-        return 1;
-    }
-
-    if (sudoku[row][col])
-    {
-        if (col == 8)
-        {
-            if (solve_sudoku(sudoku, row+1, 0)) return 1;
-        }
-        else {
-            if (solve_sudoku(sudoku, row, col+1)) return 1;
-        }
-        return 0;
-    }
-
-    for (val = 1; val < 10; val++)
-    {
-        if (is_val_valid(val, row, col, sudoku))
-        {
-            sudoku[row][col] = val;
-            if (col == 8)
-            {
-                if (solve_sudoku(sudoku, row+1, 0)) return 1;
-            }
-            else {
-                if (solve_sudoku(sudoku, row, col+1)) return 1;
-            }
-        sudoku[row][col] = 0;
-        }
-    }
+    int i, j;
+    for (i = 0; i < 9; i++)
+        for (j = 0; j < 9; j++)
+            if (sudoku[i][j] == 0)
+                return 1;
+    return 0;
 }
 
-// Procedure: print_sudoku
+// Procedure: print_sudoku  
 void print_sudoku(int sudoku[9][9])
 {
   int i, j;
