@@ -1,8 +1,12 @@
 #include "sudoku.h"
 
-//-------------------------------------------------------------------------------------------------
-// Start here to work on your MP7
-//-------------------------------------------------------------------------------------------------
+/*
+ *  This class contains function that checks the logic of filling in a soduku board as well as the overall solver.
+ *  The solve function is implemented by recursive backtracking. The program terminated when every cell of the sudolu
+ *  is filled or when the board is unsolvable. 
+ *
+ *  @author: rzhang56
+ */
 
 // You are free to declare any private functions if needed.
 
@@ -44,7 +48,7 @@ int is_val_in_3x3_zone(const int val, const int i, const int j, const int sudoku
    
   assert(i>=0 && i<9);
   int norm_i, norm_j, r, c;
-  norm_i = i / 3 * 3;
+  norm_i = i / 3 * 3;         // this determines which 3x3 to check our value against
   norm_j = j / 3 * 3;
   
   for (r = norm_i; r < norm_i + 3; r++)
@@ -73,25 +77,25 @@ int is_val_valid(const int val, const int i, const int j, const int sudoku[9][9]
 int solve_sudoku(int sudoku[9][9]) {
 
   int val, row, col;
-  val = is_empty(sudoku, row, col);     // call helper method to find an empty cell
+  val = is_empty(sudoku, row, col);     // call helper method to find an empty cell, and get its location
   if (val == 0)
   {
-      return 1;
+      return 1;    // if no empty cell, we are done!
   }
 
   for (val = 1; val < 10; val++)
   {
     if (is_val_valid(val, row, col, sudoku))
     {
-        sudoku[row][col] = val;
+        sudoku[row][col] = val;   // try tentitive number
 
         if (solve_sudoku(sudoku))
-            return 1;
+            return 1;             // recursive backtrack
 
-        sudoku[row][col] = 0;
+        sudoku[row][col] = 0;     // if it doesn't work, we try it with another value
     }
   }
-  return false;
+  return false;                   // all value tried, board unsolvable
 }
 
 // helper function that solves the sudoku
@@ -99,9 +103,9 @@ int is_empty(int sudoku[9][9], int &row, int &col)
 {
     for (row = 0; row < 9; row++)
         for (col = 0; col < 9; col++)
-            if (sudoku[row][col] == 0)
+            if (sudoku[row][col] == 0)    // checks if a cell is empty, return the location of it
                 return 1;
-    return 0;
+    return 0;        // no empty cells
 }
 
 // Procedure: print_sudoku  
