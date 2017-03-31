@@ -83,7 +83,7 @@ int move_w(game * cur_game)
     int rows = cur_game->rows;
     int cols = cur_game->cols;
     int row, col, currRow;
-    int currVal, lastVal;
+    int curr, target;
     int valid = 0;
     int mergedCell[rows][cols];
 
@@ -94,22 +94,22 @@ int move_w(game * cur_game)
             currRow = row;
             while (* get_cell(cur_game, currRow, col) != -1 && currRow > 0)
             {
-                currVal = * get_cell(cur_game, currRow, col);
-                lastVal = * get_cell(cur_game, currRow -1, col);
-                if (currVal == lastVal && mergedCell[currRow -1][col] != 1)
+                curr = * get_cell(cur_game, currRow, col);
+                target = * get_cell(cur_game, currRow -1, col);
+                if (curr == target && mergedCell[currRow -1][col] != 1)
                 {
-                    lastVal = lastVal * 2;
-                    cur_game->score += lastVal;
-                    currVal = -1;
+                    * get_cell(cur_game, currRow -1, col) = target * 2;
+                    cur_game->score += target * 2;
+                    * get_cell(cur_game, currRow, col) = -1;
                     mergedCell[currRow -1][col] = 1;
                     valid = 1;
                     currRow--;
                     break;
                 }
-                if (lastVal == -1)
+                if (target == -1)
                 {
-                    lastVal = currVal;
-                    currVal = -1;
+                    * get_cell(cur_game, currRow -1, col) = curr;
+                    * get_cell(cur_game, currRow, col) = -1;
                     valid = 1;
                     currRow--;
                 }
