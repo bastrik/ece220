@@ -38,8 +38,8 @@ void remake_game(game ** _cur_game_ptr,int new_rows,int new_cols)
 
     game * mygame = * _cur_game_ptr;
     mygame->score = 0;
-    mygame->rows = rows;
-    mygame->cols = cols;
+    mygame->rows = new_rows;
+    mygame->cols = new_cols;
     int i;
     for (i = 0; i < new_rows * new_cols; i++)
     {
@@ -95,7 +95,7 @@ int move_w(game * cur_game)
             while (* get_cell(cur_game, currRow, col) != -1 && currRow > 0)
             {
                 currVal = * get_cell(cur_game, currRow, col);
-                lastVal = * get_cell(cur_game, currRow -1, col)
+                lastVal = * get_cell(cur_game, currRow -1, col);
                 if (currVal == lastVal && mergedCell[currRow -1][col] != 1)
                 {
                     lastVal = lastVal * 2;
