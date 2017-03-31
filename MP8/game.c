@@ -13,8 +13,13 @@ game * make_game(int rows, int cols)
     game * mygame = malloc(sizeof(game));
     mygame->cells = malloc(rows*cols*sizeof(cell));
 
-    //YOUR CODE STARTS HERE:  Initialize all other variables in game struct
-
+    // initialize game struct 
+    mygame->score = 0;
+    mygame->rows = rows;
+    mygame->cols = cols;
+    int i;
+    for (i = 0; i < rows * cols; i++)
+        mygame->cells[i] = -1;
 
     return mygame;
 }
@@ -31,9 +36,15 @@ void remake_game(game ** _cur_game_ptr,int new_rows,int new_cols)
 	free((*_cur_game_ptr)->cells);
 	(*_cur_game_ptr)->cells = malloc(new_rows*new_cols*sizeof(cell));
 
-	 //YOUR CODE STARTS HERE:  Re-initialize all other variables in game struct
-
-	return;	
+    game * mygame = * _cur_game_ptr;
+    mygame->score = 0;
+    mygame->rows = rows;
+    mygame->cols = cols;
+    int i;
+    for (i = 0; i < new_rows * new_cols; i++)
+    {
+        mygame->cells[i] = -1;
+    }
 }
 
 void destroy_game(game * cur_game)
@@ -53,9 +64,12 @@ cell * get_cell(game * cur_game, int row, int col)
 	if the row and col coordinates do not exist.
 */
 {
-    //YOUR CODE STARTS HERE
-
-    return NULL;
+    if (cur_game == NULL)
+        return NULL;
+    if (row < 0 || row > cur_game->rows -1 || col < 0 || col > cur_game->cols -1)
+        return NULL;
+    
+    return &(cur_game->cells[row * cur_game->cols + col]);
 }
 
 int move_w(game * cur_game)
@@ -66,9 +80,45 @@ int move_w(game * cur_game)
    cell to change value, w is an invalid move and return 0. Otherwise, return 1. 
 */
 {
-    //YOUR CODE STARTS HERE
+    int rows = cur_game->rows;
+    int cols = cur_game->cols;
+    int row, col, currRow;
+    int currVal, lastVal;
+    int valid = 0;
+    int mergedCell[rows][cols];
 
-    return 1;
+    for (row = 1; row < rows; row++)
+    {
+        for (col = 0; col < cols; col++)
+        {
+            currRow = row;
+            while (* get_cell(cur_game, currRow, col) != -1 && currRow > 0)
+            {
+                currVal = * get_cell(cur_game, currRow, col);
+                lastVal = * get_cell(cur_game, currRow -1, col)
+                if (currVal == lastVal && mergedCell[currRow -1][col] != 1)
+                {
+                    lastVal = lastVal * 2;
+                    cur_game->score += lastVal
+                    currVal = -1;
+                    mergedCell[currRow -1][col] = 1;
+                    valid = 1;
+                    currRow--;
+                    break;
+                }
+                if (lastVal == -1)
+                {
+                    lastVal = currVal;
+                    currVal = -1;
+                    valid = 1;
+                    currRow--;
+                }
+                else
+                    break;
+            }
+        }
+    }
+    return valid;
 };
 
 int move_s(game * cur_game) //slide down
@@ -97,9 +147,32 @@ int legal_move_check(game * cur_game)
 	Return 1 if there are possible legal moves, 0 if there are none.
  */
 {
-    //YOUR CODE STARTS HERE
+    int row, col, curr, next;
+    for (row = 0; row < cur_game->rows; row++)
+    {
+        for (col = 0; col < cur_game->cols; col++)
+        {
+            if (cur_game->cells[row * cur_game->cols + col] == -1) 
+                return 1;       // return 1 if empty
+                                // if all filled, check for adjecent tiles
+            if (row < (cur_game->rows - 1)) 
+            {
+                next = cur_game->cells[(row+1) * cur_game->cols + col];
+                curr = cur_game->cells[ row    * cur_game->cols + col];
+                if (curr == next)
+                    return 1;
+            }    
+            if (col < (cur_game->cols - 1)) 
+            {
+                next = cur_game->cells[row * cur_game->cols + col + 1];
+                curr = cur_game->cells[row * cur_game->cols + col];
+                if (curr == next) 
+                    return 1;
+            }    
+        }
+    }
 
-    return 1;
+    return 0;
 }
 
 
