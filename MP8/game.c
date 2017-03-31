@@ -99,7 +99,7 @@ int move_w(game * cur_game)
                 if (currVal == lastVal && mergedCell[currRow -1][col] != 1)
                 {
                     lastVal = lastVal * 2;
-                    cur_game->score += lastVal
+                    cur_game->score += lastVal;
                     currVal = -1;
                     mergedCell[currRow -1][col] = 1;
                     valid = 1;
