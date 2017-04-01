@@ -221,7 +221,7 @@ int move_d(game * cur_game) //slide to the right
         for (col = cols -2; col > -1; col--)
         {
             currCol = col;
-            while (* get_cell(cur_game, row, currCol) != -1 && currCol > 0)
+            while (* get_cell(cur_game, row, currCol) != -1 && currCol < cols -1)
             {
                 curr = * get_cell(cur_game, row, currCol);
                 target = * get_cell(cur_game, row, currCol +1);
