@@ -123,22 +123,131 @@ int move_w(game * cur_game)
 
 int move_s(game * cur_game) //slide down
 {
-    //YOUR CODE STARTS HERE
+    int rows = cur_game->rows;
+    int cols = cur_game->cols;
+    int row, col, currRow;
+    int curr, target;
+    int valid = 0;
+    int mergedCell[rows][cols];
 
-    return 1;
+    for (row = rows -2; row > -1; row--)
+    {
+        for (col = 0; col < cols; col++)
+        {
+            currRow = row;
+            while (* get_cell(cur_game, currRow, col) != -1 && currRow < rows -1)
+            {
+                curr = * get_cell(cur_game, currRow, col);
+                target = * get_cell(cur_game, currRow +1, col);
+                if (curr == target && mergedCell[currRow +1][col] != 1)
+                {
+                    * get_cell(cur_game, currRow +1, col) = target * 2;
+                    cur_game->score += target * 2;
+                    * get_cell(cur_game, currRow, col) = -1;
+                    mergedCell[currRow +1][col] = 1;
+                    valid = 1;
+                    currRow++;
+                    break;
+                }
+                if (target == -1)
+                {
+                    * get_cell(cur_game, currRow +1, col) = curr;
+                    * get_cell(cur_game, currRow, col) = -1;
+                    valid = 1;
+                    currRow++;
+                }
+                else
+                    break;
+            }
+        }
+    }
+    return valid;
 };
 
 int move_a(game * cur_game) //slide left
 {
-    //YOUR CODE STARTS HERE
+    int rows = cur_game->rows;
+    int cols = cur_game->cols;
+    int row, col, currCol;
+    int curr, target;
+    int valid = 0;
+    int mergedCell[rows][cols];
 
-    return 1;
+    for (row = 0; row < rows; row++)
+    {
+        for (col = 1; col < cols; col++)
+        {
+            currCol = col;
+            while (* get_cell(cur_game, row, currCol) != -1 && currCol > 0)
+            {
+                curr = * get_cell(cur_game, row, currCol);
+                target = * get_cell(cur_game, row, currCol -1);
+                if (curr == target && mergedCell[row][currCol -1] != 1)
+                {
+                    * get_cell(cur_game, row, currCol -1) = target * 2;
+                    cur_game->score += target * 2;
+                    * get_cell(cur_game, row, currCol) = -1;
+                    mergedCell[row][currCol -1] = 1;
+                    valid = 1;
+                    currCol--;
+                    break;
+                }
+                if (target == -1)
+                {
+                    * get_cell(cur_game, row, currCol -1) = curr;
+                    * get_cell(cur_game, row, currCol) = -1;
+                    valid = 1;
+                    currCol--;
+                }
+                else
+                    break;
+            }
+        }
+    }
+    return valid;
 };
 
-int move_d(game * cur_game){ //slide to the right
-    //YOUR CODE STARTS HERE
+int move_d(game * cur_game) //slide to the right
+{ 
+    int rows = cur_game->rows;
+    int cols = cur_game->cols;
+    int row, col, currCol;
+    int curr, target;
+    int valid = 0;
+    int mergedCell[rows][cols];
 
-    return 1;
+    for (row = 0; row < rows; row++)
+    {
+        for (col = cols -2; col > -1; col--)
+        {
+            currCol = col;
+            while (* get_cell(cur_game, row, currCol) != -1 && currCol > 0)
+            {
+                curr = * get_cell(cur_game, row, currCol);
+                target = * get_cell(cur_game, row, currCol +1);
+                if (curr == target && mergedCell[row][currCol +1] != 1)
+                {
+                    * get_cell(cur_game, row, currCol +1) = target * 2;
+                    cur_game->score += target * 2;
+                    * get_cell(cur_game, row, currCol) = -1;
+                    mergedCell[row][currCol +1] = 1;
+                    valid = 1;
+                    currCol++;
+                    break;
+                }
+                if (target == -1)
+                {
+                    * get_cell(cur_game, row, currCol +1) = curr;
+                    * get_cell(cur_game, row, currCol) = -1;
+                    valid = 1;
+                    currCol++;
+                }
+                else
+                    break;
+            }
+        }
+    }
+    return valid;
 };
 
 int legal_move_check(game * cur_game)
