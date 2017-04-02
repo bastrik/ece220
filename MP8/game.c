@@ -1,3 +1,14 @@
+ /*
+  *   2048
+  *   game.c contains the logic functions for the game 2048. The difference in this version is that game is not
+  *   limited to a 4x4 grid but rather any MxN grid. Rules and goal of the game are the same, as you can move
+  *   up, down, left, right for the goal of getting a 2048 tile, for which you win the game. Game ends when
+  *   you haven't reached 2048 and ran out of space on the board.
+  *
+  *   This class contains functions that make the game, move (up, down, left, right), and check if move is legal.
+  */
+
+
 #include "game.h"
 
 
@@ -37,6 +48,7 @@ void remake_game(game ** _cur_game_ptr,int new_rows,int new_cols)
 	(*_cur_game_ptr)->cells = malloc(new_rows*new_cols*sizeof(cell));
 
     game * mygame = * _cur_game_ptr;
+    // reinitialize a game
     mygame->score = 0;
     mygame->rows = new_rows;
     mygame->cols = new_cols;
@@ -64,9 +76,9 @@ cell * get_cell(game * cur_game, int row, int col)
 	if the row and col coordinates do not exist.
 */
 {
-    if (cur_game == NULL)
+    if (cur_game == NULL)   // safeguarding
         return NULL;
-    if (row < 0 || row > cur_game->rows -1 || col < 0 || col > cur_game->cols -1)
+    if (row < 0 || row > cur_game->rows -1 || col < 0 || col > cur_game->cols -1)   // edge case
         return NULL;
     
     return &(cur_game->cells[row * cur_game->cols + col]);
@@ -85,27 +97,30 @@ int move_w(game * cur_game)
     int row, col, currRow;
     int curr, target;
     int valid = 0;
-    int mergedCell[rows][cols];
+    int mergedCell[rows][cols];   // i like 2d arrays better
 
     for (row = 1; row < rows; row++)
     {
         for (col = 0; col < cols; col++)
         {
             currRow = row;
+            // if curr cell not empty, we iterate from current row (row) upwards
             while (* get_cell(cur_game, currRow, col) != -1 && currRow > 0)
             {
                 curr = * get_cell(cur_game, currRow, col);
                 target = * get_cell(cur_game, currRow -1, col);
+                // if this target cell above is of same value and haven't merged, we merge
+                // and add score
                 if (curr == target && mergedCell[currRow -1][col] != 1)
                 {
                     * get_cell(cur_game, currRow -1, col) = target * 2;
                     cur_game->score += target * 2;
                     * get_cell(cur_game, currRow, col) = -1;
-                    mergedCell[currRow -1][col] = 1;
+                    mergedCell[currRow -1][col] = 1;    // set target cell as merged
                     valid = 1;
-                    currRow--;
-                    break;
+                    break;    // can move onto next cell
                 }
+                // if target cell is empty, we simply move curr to target
                 if (target == -1)
                 {
                     * get_cell(cur_game, currRow -1, col) = curr;
@@ -113,8 +128,6 @@ int move_w(game * cur_game)
                     valid = 1;
                     currRow--;
                 }
-                else
-                    break;
             }
         }
     }
