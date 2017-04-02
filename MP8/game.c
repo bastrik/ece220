@@ -128,6 +128,8 @@ int move_w(game * cur_game)
                     valid = 1;
                     currRow--;
                 }
+                else
+                  break;
             }
         }
     }
