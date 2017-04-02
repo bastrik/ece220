@@ -136,7 +136,7 @@ int move_w(game * cur_game)
     return valid;
 };
 
-int move_s(game * cur_game) //slide down
+int move_s(game * cur_game) //slide down, same idea, comments omitted
 {
     int rows = cur_game->rows;
     int cols = cur_game->cols;
@@ -161,7 +161,6 @@ int move_s(game * cur_game) //slide down
                     * get_cell(cur_game, currRow, col) = -1;
                     mergedCell[currRow +1][col] = 1;
                     valid = 1;
-                    currRow++;
                     break;
                 }
                 if (target == -1)
@@ -179,7 +178,7 @@ int move_s(game * cur_game) //slide down
     return valid;
 };
 
-int move_a(game * cur_game) //slide left
+int move_a(game * cur_game) //slide left, same idea, comments omitted
 {
     int rows = cur_game->rows;
     int cols = cur_game->cols;
@@ -204,7 +203,6 @@ int move_a(game * cur_game) //slide left
                     * get_cell(cur_game, row, currCol) = -1;
                     mergedCell[row][currCol -1] = 1;
                     valid = 1;
-                    currCol--;
                     break;
                 }
                 if (target == -1)
@@ -222,7 +220,7 @@ int move_a(game * cur_game) //slide left
     return valid;
 };
 
-int move_d(game * cur_game) //slide to the right
+int move_d(game * cur_game) //slide to the right, same idea, comments omitted
 { 
     int rows = cur_game->rows;
     int cols = cur_game->cols;
@@ -247,7 +245,6 @@ int move_d(game * cur_game) //slide to the right
                     * get_cell(cur_game, row, currCol) = -1;
                     mergedCell[row][currCol +1] = 1;
                     valid = 1;
-                    currCol++;
                     break;
                 }
                 if (target == -1)
@@ -278,7 +275,8 @@ int legal_move_check(game * cur_game)
         {
             if (cur_game->cells[row * cur_game->cols + col] == -1) 
                 return 1;       // return 1 if empty
-                                // if all filled, check for adjecent tiles
+                                // if all filled, check for adjecent tiles, if adjecent tiles
+                                // are equal, game is not over yet
             if (row < (cur_game->rows - 1)) 
             {
                 next = cur_game->cells[(row+1) * cur_game->cols + col];
