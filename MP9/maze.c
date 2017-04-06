@@ -67,7 +67,7 @@ maze_t * createMaze(char * fileName)
 void destroyMaze(maze_t * maze)
 {
     int i;
-    for (i = 0; i < maze->height; ++i)
+    for (i = 0; i < maze->height; i++)
     	free(maze->cells[i]);
     free(maze->cells);
     free(maze);
