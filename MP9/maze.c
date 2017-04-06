@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "maze.h"
 
+char getPath(maze_t * maze, int x, int y);
 
 /*
  * createMaze -- Creates and fills a maze structure from the given file
@@ -96,6 +97,13 @@ void printMaze(maze_t * maze)
     }
 }
 
+char getPath(maze_t * maze, int col, int row)
+{
+	if (col > -1 && col < maze->width && row > -1 && row < maze->height)
+		return maze->cells[row][col];
+	else return '*';	// out of bound
+}
+
 /*
  * solveMazeManhattanDFS -- recursively solves the maze using depth first search,
  * INPUTS:               maze -- pointer to maze structure with all necessary maze information
@@ -107,6 +115,44 @@ void printMaze(maze_t * maze)
  */ 
 int solveMazeManhattanDFS(maze_t * maze, int col, int row)
 {
-    // Your code here. Make sure to replace following line with your own code.
+    if (getPath(maze, col, row-1) == 'E' || getPath(maze, col, row+1) == 'E'
+    	|| getPath(maze, col-1, row) == 'E' || getPath(maze, col+1, row) == 'E')
+    {
+    	return 1;		// base case
+    }
+
+    if (getPath(maze, col-1, row) == ' ')		// Left
+    {
+    	maze->cells[row][col-1] = '.';
+    	if (solveMazeManhattanDFS(maze, int col-1, int row) == 1)
+    	{
+    		return 1;
+    	}
+    }
+    if (getPath(maze, col, row+1) == ' ')		// Down
+    {
+    	maze->cells[row+1][col] = '.';
+    	if (solveMazeManhattanDFS(maze, int col, int row+1) == 1)
+    	{
+    		return 1;
+    	}
+    }
+    if (getPath(maze, col+1, row) == ' ')		// Right
+    {
+    	maze->cells[row][col+1] = '.';
+    	if (solveMazeManhattanDFS(maze, int col+1, int row) == 1)
+    	{
+    		return 1;
+    	}
+    }
+    if (getPath(maze, col, row-1) == ' ')		// Up
+    {
+    	maze->cells[row-1][col] = '.';
+    	if (solveMazeManhattanDFS(maze, int col, int row-1) == 1)
+    	{
+    		return 1;
+    	}
+    }
+    maze->cells[row][col] = '~';
     return 0;
 }
