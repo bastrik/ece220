@@ -54,6 +54,7 @@ maze_t * createMaze(char * fileName)
     		}
     	}
     }
+    fclose(file);
     return newMaze;
 }
 
