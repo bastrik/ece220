@@ -123,7 +123,7 @@ int solveMazeManhattanDFS(maze_t * maze, int col, int row)
     maze->cells[row][col] = '.';
     if (getPath(maze, col-1, row) == ' ')		// Left
     {
-    	//maze->cells[row][col-1] = '.';
+    	maze->cells[row][col-1] = '.';
     	if (solveMazeManhattanDFS(maze, col-1, row) == 1)
     	{
     		return 1;
@@ -131,7 +131,7 @@ int solveMazeManhattanDFS(maze_t * maze, int col, int row)
     }
     if (getPath(maze, col, row+1) == ' ')		// Down
     {
-    	//maze->cells[row+1][col] = '.';
+    	maze->cells[row+1][col] = '.';
     	if (solveMazeManhattanDFS(maze, col, row+1) == 1)
     	{
     		return 1;
@@ -139,7 +139,7 @@ int solveMazeManhattanDFS(maze_t * maze, int col, int row)
     }
     if (getPath(maze, col+1, row) == ' ')		// Right
     {
-    	//maze->cells[row][col+1] = '.';
+    	maze->cells[row][col+1] = '.';
     	if (solveMazeManhattanDFS(maze, col+1, row) == 1)
     	{
     		return 1;
@@ -147,7 +147,7 @@ int solveMazeManhattanDFS(maze_t * maze, int col, int row)
     }
     if (getPath(maze, col, row-1) == ' ')		// Up
     {
-    	//maze->cells[row-1][col] = '.';
+    	maze->cells[row-1][col] = '.';
     	if (solveMazeManhattanDFS(maze, col, row-1) == 1)
     	{
     		return 1;
