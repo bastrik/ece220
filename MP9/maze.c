@@ -42,7 +42,6 @@ maze_t * createMaze(char * fileName)
     	else
     	{
     		newMaze->cells[i][j] = c;
-    		j++;
     		if (c == 'S')
     		{
     			newMaze->startColumn = j;
@@ -53,6 +52,7 @@ maze_t * createMaze(char * fileName)
     			newMaze->endColumn = j;
     			newMaze->endRow = i;
     		}
+    		j++;
     	}
     }
     fclose(file);
