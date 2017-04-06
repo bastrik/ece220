@@ -12,8 +12,49 @@
  */
 maze_t * createMaze(char * fileName)
 {
-    // Your code here. Make sure to replace following line with your own code.
-    return NULL;
+    maze_t * newMaze = malloc(sizeof(maze_t));
+
+    FILE * file;
+	int i, j, width, height;
+	char c;
+	file = fopen(fileName, "r");
+    fscanf(file, "%d", &width);
+    fscanf(file, "%d", &height);
+    fgetc(file);
+
+    newMaze->width = width;
+    newMaze->height = height;
+
+    newMaze->cells = (char **)malloc(sizeof(char *) * height);
+    for(i = 0; i < height; i++)
+    	newMaze->cells[i] = (char *)malloc(sizeof(char) * width);
+
+    i = 0;
+    j = 0;
+    while ((c = fgetc(file)) != EOF)
+    {
+    	if (c == '\n')
+    	{
+    		i++;
+    		j = 0;
+    	}
+    	else
+    	{
+    		newMaze->cells[i][j] = c;
+    		j++;
+    		if (c == 'S')
+    		{
+    			newMaze->startColumn = j;
+    			newMaze->startRow = i;
+    		}
+    		if (c == 'E')
+    		{
+    			newMaze->endColumn = j;
+    			newMaze->endRow = i;
+    		}
+    	}
+    }
+    return newMaze;
 }
 
 /*
@@ -25,7 +66,11 @@ maze_t * createMaze(char * fileName)
  */
 void destroyMaze(maze_t * maze)
 {
-    // Your code here.
+    int i;
+    for (i = 0; i < maze->height; ++i)
+    	free(maze->cells[i]);
+    free(maze->cells);
+    free(maze);
 }
 
 /*
@@ -39,7 +84,15 @@ void destroyMaze(maze_t * maze)
  */
 void printMaze(maze_t * maze)
 {
-    // Your code here.
+    int r, c;
+    for (r = 0; r < maze->height; r++)
+    {
+    	for (c = 0; c < maze->width; c++)
+    	{
+    		printf("%c", maze->cells[r][c]);
+    	}
+    	printf("\n");
+    }
 }
 
 /*
