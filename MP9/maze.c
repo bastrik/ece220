@@ -28,7 +28,7 @@ maze_t * createMaze(char * fileName)
     FILE * file;
 	int i, j, width, height;
 	char c;
-	file = fopen(fileName, "r");   // read file, assume file is valid.
+	file = fopen(fileName, "r");   // read file, assume file is valid
     fscanf(file, "%d", &width);
     fscanf(file, "%d", &height);
     fgetc(file);
