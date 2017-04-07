@@ -1,7 +1,17 @@
+/*
+ *  File containing methods for building, printing, solving, destroying an arbitary maze.
+ *  Create maze will make a maze on the heap, and solving maze uses DFS to find a solution
+ *  for the maze. If there is no solution for the current maze, will return "unsolvable"
+ *  This file contains declaration for helper method getPath b/c we cannot modify maze.h
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "maze.h"
 
+/*
+ * getPath -- Helper method for DFS
+ */
 char getPath(maze_t * maze, int x, int y);
 
 /*
@@ -18,7 +28,7 @@ maze_t * createMaze(char * fileName)
     FILE * file;
 	int i, j, width, height;
 	char c;
-	file = fopen(fileName, "r");
+	file = fopen(fileName, "r");   // read file, assume file is valid.
     fscanf(file, "%d", &width);
     fscanf(file, "%d", &height);
     fgetc(file);
@@ -26,7 +36,7 @@ maze_t * createMaze(char * fileName)
     newMaze->width = width;
     newMaze->height = height;
 
-    newMaze->cells = (char **)malloc(sizeof(char *) * height);
+    newMaze->cells = (char **)malloc(sizeof(char *) * height);      // allocating 2d array
     for(i = 0; i < height; i++)
     	newMaze->cells[i] = (char *)malloc(sizeof(char) * width);
 
@@ -34,7 +44,7 @@ maze_t * createMaze(char * fileName)
     j = 0;
     while ((c = fgetc(file)) != EOF)
     {
-    	if (c == '\n')
+    	if (c == '\n')     // if at end of line, reset row counter
     	{
     		i++;
     		j = 0;
@@ -69,7 +79,7 @@ maze_t * createMaze(char * fileName)
 void destroyMaze(maze_t * maze)
 {
     int i;
-    for (i = 0; i < maze->height; i++)
+    for (i = 0; i < maze->height; i++)      // free ** cells before maze
     	free(maze->cells[i]);
     free(maze->cells);
     free(maze);
@@ -96,7 +106,7 @@ void printMaze(maze_t * maze)
     	printf("\n");
     }
 }
-
+// helper that checks conditions and return char value at a cell location
 char getPath(maze_t * maze, int col, int row)
 {
 	if (col > -1 && col < maze->width && row > -1 && row < maze->height)
