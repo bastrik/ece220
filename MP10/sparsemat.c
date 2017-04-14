@@ -55,7 +55,7 @@ double gv_tuples(sp_tuples * mat_t,int row,int col)
 	{
 		r = curr->row;
 		c = curr->col;
-		if(r = row && c = col)
+		if(r == row && c == col)
 			return curr->value;
 		curr = curr->next;
 	}
@@ -139,7 +139,7 @@ void save_tuples(char * file_name, sp_tuples * mat_t)
 
 sp_tuples * add_tuples(sp_tuples * matA, sp_tuples * matB)
 {
-	if ((matA->m != matB->m) || (matA0>n != matB->m))		// illegal addition
+	if ((matA->m != matB->m) || (matA->n != matB->m))		// illegal addition
 		return NULL;
 
 	sp_tuples * retmat = (sp_tuples *) malloc(sizeof(sp_tuples));
@@ -197,8 +197,8 @@ sp_tuples * mult_tuples(sp_tuples * matA, sp_tuples * matB)
 	
 void destroy_tuples(sp_tuples * mat_t)
 {
-	sp_tuples_node * curr, temp;
-	curr = mat_t->head;
+	sp_tuples_node * curr, * temp;
+	curr = mat_t->tuples_head;
 	while (curr != NULL)
 	{
 		temp = curr;
