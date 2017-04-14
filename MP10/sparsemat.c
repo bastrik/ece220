@@ -110,7 +110,10 @@ void set_tuples(sp_tuples * mat_t, int row, int col, double value)
 		newNode->col = col;
 		newNode->value = value;
 		newNode->next = curr;
-		prev->next = newNode;
+		if (prev != NULL)
+			prev->next = newNode;
+		else
+			mat_t->tuples_head = newNode;
 		mat_t->nz++;
     }
 
