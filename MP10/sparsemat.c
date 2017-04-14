@@ -95,6 +95,7 @@ void set_tuples(sp_tuples * mat_t, int row, int col, double value)
 			if (value != 0)		// found and value not 0, update
 			{
 				curr->value = value;
+				return;
 			}
 		}			
 		prev = curr;			// not yet found, traverse
