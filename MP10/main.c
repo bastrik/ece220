@@ -74,11 +74,11 @@ int main(int argc, char *argv[]){
 	printt(sla_C);
 
 	//very large sparese matrices multiplication
-	sp_tuples * sml_A = load_tuples("matrices/input_mats/sml_A.txt");
-	sp_tuples * sml_B = load_tuples("matrices/input_mats/sml_B.txt");
-	printf("sml_C = sml_A*sml_B sparse multiplication in tuples:\n");
-	sp_tuples * sml_C = mult_tuples(sml_A,sml_B);
-	printt(sml_C);
+	//sp_tuples * sml_A = load_tuples("matrices/input_mats/sml_A.txt");
+	//sp_tuples * sml_B = load_tuples("matrices/input_mats/sml_B.txt");
+	//printf("sml_C = sml_A*sml_B sparse multiplication in tuples:\n");
+	//sp_tuples * sml_C = mult_tuples(sml_A,sml_B);
+	//printt(sml_C);
 	
 	printf("Saving output matrices... \n");
 	
@@ -90,7 +90,7 @@ int main(int argc, char *argv[]){
 	save_tuples("matrices/output_mats/m_Ct.txt",m_Ct);
 	save_tuples("matrices/output_mats/sm_Ct.txt",sm_Ct);
 	save_tuples("matrices/output_mats/sla_C.txt",sla_C);
-	save_tuples("matrices/output_mats/sml_C.txt",sml_C);	
+	//save_tuples("matrices/output_mats/sml_C.txt",sml_C);	
 
     printf("freeing matrices from memory..\n");
 	destroy_tuples(withZeroest);
@@ -102,21 +102,21 @@ int main(int argc, char *argv[]){
 	destroy_tuples(m_At);
 	destroy_tuples(sm_At);
 	destroy_tuples(sla_A);
-	destroy_tuples(sml_A);
+	//destroy_tuples(sml_A);
 	
 	destroy_tuples(a_Bt);
 	destroy_tuples(sa_Bt);
 	destroy_tuples(m_Bt);
 	destroy_tuples(sm_Bt);
 	destroy_tuples(sla_B);
-	destroy_tuples(sml_B);
+	//destroy_tuples(sml_B);
 	
 	destroy_tuples(a_Ct);
 	destroy_tuples(sa_Ct);
 	destroy_tuples(m_Ct);
 	destroy_tuples(sm_Ct);
 	destroy_tuples(sla_C);
-	destroy_tuples(sml_C);
+	//destroy_tuples(sml_C);
 	
 
     return 0;
