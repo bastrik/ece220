@@ -181,7 +181,7 @@ void postfix_traversal(node_t* ptr, int* nth, expression_unit_t* expression) {
 
   expression[*nth].module = ptr->module;
   expression[*nth].cutline = ptr->cutline;
-  *nth++;
+  *nth = *nth + 1;
 }
 
 // Procedure: init_slicing_tree
@@ -243,7 +243,7 @@ node_t* init_slicing_tree(node_t* par, int n) {
 
     if (n < num_modules - 1)
         newNode->left = init_slicing_tree(newNode, n+1);
-    
+
     return newNode;
 }
 
