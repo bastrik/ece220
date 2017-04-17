@@ -1,0 +1,65 @@
+Compilation Results:
+********************
+
+load_tuples test: 10 pts total
+Test 1: load tuple
++5: load_tuples: m,n,nnz match
++5: load_tuples: nodes match
+
+gv_tuples test: 5 pts total
+Test 2: gv
++5: gv_tuples
+
+set_tuples test: 35 pts total
+
+add_tuples test: 10 pts total
+
+mult_tuples test: 15 pts total
+
+save_tuples test: 10 pts total
+Test 6: save
+testing save_tuples, saving to save_test_tuples.txt
+
+Printing diff of save tuples. If empty, 10 pts
+
+10
+destroy_tuples test: 5 pts total
+Printing valgrind output. If no memory leaks/errors, 5 pts
+==1217== Memcheck, a memory error detector
+==1217== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==1217== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==1217== Command: ./test0 7
+==1217== 
+==1217== Invalid read of size 8
+==1217==    at 0x401DAA: destroy_tuples (sparsemat.c:205)
+==1217==    by 0x401148: main (test0.c:413)
+==1217==  Address 0x10 is not stack'd, malloc'd or (recently) free'd
+==1217== 
+==1217== 
+==1217== Process terminating with default action of signal 11 (SIGSEGV)
+==1217==  Access not within mapped region at address 0x10
+==1217==    at 0x401DAA: destroy_tuples (sparsemat.c:205)
+==1217==    by 0x401148: main (test0.c:413)
+==1217==  If you believe this happened as a result of a stack
+==1217==  overflow in your program's main thread (unlikely but
+==1217==  possible), you can try to increase the size of the
+==1217==  main thread stack using the --main-stacksize= flag.
+==1217==  The main thread stack size used in this run was 8388608.
+==1217== 
+==1217== HEAP SUMMARY:
+==1217==     in use at exit: 0 bytes in 0 blocks
+==1217==   total heap usage: 44 allocs, 44 frees, 2,144 bytes allocated
+==1217== 
+==1217== All heap blocks were freed -- no leaks are possible
+==1217== 
+==1217== For counts of detected and suppressed errors, rerun with: -v
+==1217== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+timeout: the monitored command dumped core
+
+Grade:
+******
+Late submission: 0
+Functionality: 30
+Comments and Style: 
+Intro paragraph: 
+Total: 
