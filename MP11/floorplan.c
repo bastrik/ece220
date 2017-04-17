@@ -55,21 +55,27 @@ void floorplan(const char file[]) {
 // Function: is_leaf_node
 // Return 1 if the given slicing tree node is a leaf node, and 0 otherwise.
 int is_leaf_node(node_t* ptr) {
-  // TODO: (remember to modify the return value appropriately)
-  return 0;
+  return (ptr->left == NULL) && (ptr->right == NULL);
 }
 
 // Function: is_internal_node
 // Return 1 if the given slicing tree node is an internal node, and 0 otherwise.
 int is_internal_node(node_t* ptr) {
-  // TODO: (remember to modify the return value appropriately)
-  return 0;
+  return (ptr->left != NULL) && (ptr->right != NULL);
 }
 
 // Function: is_in_subtree
 // Return 1 if the given subtree rooted at node 'b' resides in the subtree rooted at node 'a'.
 int is_in_subtree(node_t* a, node_t* b) {
-  // TODO: (remember to modify the return value appropriately)
+  node_t * curr = b;
+
+  while (curr != NULL)
+  {
+    if (curr == a)
+      return 1;
+    curr = curr->parent;
+  }
+
   return 0;
 }
 
@@ -77,7 +83,11 @@ int is_in_subtree(node_t* a, node_t* b) {
 // Rotate a module from a given leaf node of the slicing tree by 90 degree. That is, the height 
 // and the width of the modules are swapped.
 void rotate(node_t* ptr) {
-  // TODO: Rotate the module, swapping the width and height.
+  int newW;
+
+  newW = ptr->module->w;
+  ptr->module->w = ptr->module->h;
+  ptr->module->h = newW;
 }
 
 // Procedure: recut
@@ -88,8 +98,10 @@ void recut(node_t* ptr) {
   if(!is_internal_node(ptr)) return;
   assert(ptr->module == NULL && ptr->cutline != UNDEFINED_CUTLINE);
 
-  // TODO: 
-  return;
+  if (ptr->cutline == H)
+    ptr->cutline = V;
+  else
+    ptr->cutline = H;
 }
 
 // Procedure: swap_module
@@ -99,7 +111,10 @@ void swap_module(node_t* a, node_t* b) {
   assert(a->module != NULL && a->cutline == UNDEFINED_CUTLINE);
   assert(b->module != NULL && b->cutline == UNDEFINED_CUTLINE); //if undefined cutline, then the modules are numbers
 
-  // TODO:
+  module_t * temp;
+  temp = b->module;
+  b->module = a->module;
+  a->module = temp;
 }
 
 // Procedure: swap_topology
@@ -113,7 +128,20 @@ void swap_topology(node_t* a, node_t* b) {
   if(is_in_subtree(a, b) || is_in_subtree(b, a)) return;
   assert(a->parent != NULL && b->parent != NULL);
  
-  // TODO:
+  node_t * temp;
+  if (a->parent->left == a)
+    a->parent->left = b;
+  else
+    a->parent->right = b;
+
+  if (b->parent->left == b)
+    b->parent->left = a;
+  else
+    b->parent->right = a;
+
+  temp = a->parent;
+  a->parent = b->parent;
+  b->parent = temp;
 }
 
 // Procedure: get_expression
@@ -148,7 +176,12 @@ void postfix_traversal(node_t* ptr, int* nth, expression_unit_t* expression) {
   
   if(ptr == NULL) return;
 
-  // TODO:
+  postfix_traversal(ptr->left, nth, expression);
+  postfix_traversal(ptr->right, nth, expression);
+
+  expression[*nth].module = ptr->module;
+  expression[*nth].cutline = ptr->cutline;
+  *nth++;
 }
 
 // Procedure: init_slicing_tree
@@ -180,10 +213,38 @@ void postfix_traversal(node_t* ptr, int* nth, expression_unit_t* expression) {
 //
 node_t* init_slicing_tree(node_t* par, int n) {
   
-  assert(n >= 0 && n < num_modules);
+    assert(n >= 0 && n < num_modules);
+    node_t * newNode = (node_t *) malloc(sizeof(node_t));
+    node_t * child;
+  
+    if (n == num_modules -1)
+    {
+        newNode->module = &modules[n];
+        newNode->cutline = UNDEFINED_CUTLINE;
+        newNode->parent = par;
+        newNode->left = NULL;
+        newNode->right = NULL;
+    }
+    else
+    {
+        child = (node_t *) malloc(sizeof(node_t));
+        newNode->module = NULL;
+        newNode->cutline = V;
+        newNode->parent = par;
+        newNode->left = NULL;
+        newNode->right = child;
 
-  // TODO: (remember to remove the following return statement)
-  return NULL;
+        child->module = &modules[n];
+        child->cutline = UNDEFINED_CUTLINE;
+        child->parent = newNode;
+        child->left = NULL;
+        child->right = NULL;
+    }
+
+    if (n < num_modules - 1)
+        newNode->left = init_slicing_tree(newNode, n+1);
+    
+    return newNode;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
