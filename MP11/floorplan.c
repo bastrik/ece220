@@ -2,6 +2,10 @@
 
 /*This program will try to use tree to organize shapes in sush a way as the rectangles are organized in a bigger reactangle
 This is very important to circuits designs and organizing things on silicon The trees will be sliced.*/
+/*
+ *  This program contains functions for tree structure manipulation. Including rotate, cut, initialize, which I have to 
+ *  implement. The rest of the functionalities are provided.
+ */
 
 // Global variables. The global variables will be effectice after the input has been parsed
 // by calling the procedure read_module.
@@ -55,12 +59,14 @@ void floorplan(const char file[]) {
 // Function: is_leaf_node
 // Return 1 if the given slicing tree node is a leaf node, and 0 otherwise.
 int is_leaf_node(node_t* ptr) {
+  // it is leaf if it has no children
   return (ptr->left == NULL) && (ptr->right == NULL);
 }
 
 // Function: is_internal_node
 // Return 1 if the given slicing tree node is an internal node, and 0 otherwise.
 int is_internal_node(node_t* ptr) {
+  // internal if it has children
   return (ptr->left != NULL) && (ptr->right != NULL);
 }
 
@@ -71,7 +77,7 @@ int is_in_subtree(node_t* a, node_t* b) {
 
   while (curr != NULL)
   {
-    if (curr == a)
+    if (curr == a)    // search up from b
       return 1;
     curr = curr->parent;
   }
@@ -129,7 +135,7 @@ void swap_topology(node_t* a, node_t* b) {
   assert(a->parent != NULL && b->parent != NULL);
  
   node_t * temp;
-  if (a->parent->left == a)
+  if (a->parent->left == a)     // check if it is left or right child and swap
     a->parent->left = b;
   else
     a->parent->right = b;
@@ -175,7 +181,7 @@ void get_expression(node_t* root, int N, expression_unit_t* expression) {
 void postfix_traversal(node_t* ptr, int* nth, expression_unit_t* expression) {
   
   if(ptr == NULL) return;
-
+  // post order
   postfix_traversal(ptr->left, nth, expression);
   postfix_traversal(ptr->right, nth, expression);
 
@@ -217,7 +223,7 @@ node_t* init_slicing_tree(node_t* par, int n) {
     node_t * newNode = (node_t *) malloc(sizeof(node_t));
     node_t * child;
   
-    if (n == num_modules -1)
+    if (n == num_modules -1)        // base case, this node will be a leaf
     {
         newNode->module = &modules[n];
         newNode->cutline = UNDEFINED_CUTLINE;
@@ -225,7 +231,7 @@ node_t* init_slicing_tree(node_t* par, int n) {
         newNode->left = NULL;
         newNode->right = NULL;
     }
-    else
+    else                            // otherwise, we create an internal node + right child
     {
         child = (node_t *) malloc(sizeof(node_t));
         newNode->module = NULL;
@@ -241,7 +247,7 @@ node_t* init_slicing_tree(node_t* par, int n) {
         child->right = NULL;
     }
 
-    if (n < num_modules - 1)
+    if (n < num_modules - 1)        // recursive call
         newNode->left = init_slicing_tree(newNode, n+1);
 
     return newNode;
