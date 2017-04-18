@@ -44,7 +44,7 @@ Grade: 10 / 10
 Grade:
 ******
 Late submission: 0
-Functionality:
-Comments and Style: 
-Intro paragraph: 
-Total: 
+Functionality: 90
+Comments and Style: 5
+Intro paragraph: 5
+Total: 100
