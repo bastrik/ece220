@@ -21,7 +21,7 @@ string Shape::getName()
 //Rectangle
 //Please implement the member functions of Rectangle:
 //constructor, getArea(), getVolume(), operator+, operator-
-Rectangle::Rectangle(double width, double length)
+Rectangle::Rectangle(double width, double length) : Shape("Rectangle")
 {
 	width_ = width;
 	length_ = length;
@@ -56,7 +56,7 @@ Rectangle Rectangle::operator - (const Rectangle& rec)
 //Circle
 //Please implement the member functions of Circle:
 //constructor, getArea(), getVolume(), operator+, operator-
-Circle::Circle(double radius)
+Circle::Circle(double radius) : Shape("Circle")
 {
 	radius_ = radius;
 }
@@ -64,7 +64,7 @@ Circle::Circle(double radius)
 double Circle::getRadius(){return radius_;}
 double Circle::getArea()
 {
-	return radius_ * radius_ * PI;
+	return radius_ * radius_ * M_PI;
 }
 double Circle::getVolume()
 {
@@ -85,7 +85,7 @@ Circle Circle::operator - (const Circle& cir)
 //Sphere
 //Please implement the member functions of Sphere:
 //constructor, getArea(), getVolume(), operator+, operator-
-Sphere::Sphere(double radius)
+Sphere::Sphere(double radius) : Shape("Sphere")
 {
 	radius_ = radius;
 }
@@ -93,7 +93,7 @@ Sphere::Sphere(double radius)
 double Sphere::getRadius(){return radius_;}
 double Sphere::getArea()
 {
-	return 4 * radius_ * radius_ * PI;
+	return 4 * radius_ * radius_ * M_PI;
 }
 double Sphere::getVolume()
 {
@@ -114,7 +114,7 @@ Sphere Sphere::operator - (const Sphere& sph)
 //Rectprism
 //Please implement the member functions of RectPrism:
 //constructor, getArea(), getVolume(), operator+, operator-
-RectPrism::RectPrism(double width, double length, double height)
+RectPrism::RectPrism(double width, double length, double height) : Shape("RectPrism")
 {
 	length_ = length;
   	width_ = width;
@@ -124,11 +124,11 @@ RectPrism::RectPrism(double width, double length, double height)
 double RectPrism::getWidth(){return width_;}
 double RectPrism::getHeight(){return height_;}
 double RectPrism::getLength(){return length_;}
-double Rectprism::getArea()
+double RectPrism::getArea()
 {
 	return 2 * (length_*width_ + length_*height_ + width_*height_);
 }
-double Rectprism::getVolume()
+double RectPrism::getVolume()
 {
 	return length_ * width_ * height_;
 }
@@ -185,7 +185,7 @@ vector<Shape*> CreateShapes(char* file_name){
     		double l = fscanf(file, "%lf", &l);
     		double w = fscanf(file, "%lf", &w);
     		double h = fscanf(file, "%lf", &h);
-    		Shape * s = new Rectangle(w, l, h);
+    		Shape * s = new RectPrism(w, l, h);
     		v.push_back(s);
     	}
     }
@@ -197,7 +197,7 @@ vector<Shape*> CreateShapes(char* file_name){
 // return the max area
 double MaxArea(vector<Shape*> shapes){
 	double max_area = 0;
-	for (vector<Shape*>::iterator it = shapes.begin(); i != shapes.end(); ++it)
+	for (vector<Shape*>::iterator it = shapes.begin(); it != shapes.end(); ++it)
 	{
 		double temp = it->getArea();
 		if (temp > max_area)
