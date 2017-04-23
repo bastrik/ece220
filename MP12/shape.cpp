@@ -155,7 +155,8 @@ RectPrism RectPrism::operator - (const RectPrism& rectp)
 vector<Shape*> CreateShapes(char* file_name){
 	ifstream file;
 	file.open(file_name, ios::in);
-	int size = file >> size;
+	int size;
+	file >> size;
 	vector<Shape*> v(size);
 	string shape;
 	double r, l, w, h;
