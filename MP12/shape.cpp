@@ -153,46 +153,42 @@ RectPrism RectPrism::operator - (const RectPrism& rectp)
 // Read shapes from test.txt and initialize the objects
 // Return a vector of pointers that points to the objects 
 vector<Shape*> CreateShapes(char* file_name){
-	FILE * file;
-	file = fopen(file_name, "r");
-	int size = fscanf(file, "%d", &size);
+	ifstream file;
+	file.open(file_name, ios::in);
+	int size = file >> size;
 	vector<Shape*> v(size);
 	string shape;
 	double r, l, w, h;
 
-	while(feof(file) == 0)
-    {    	
-    	fscanf(file, "%s", &shape);
+	while(file >> shape)
+    {
     	cout << shape << endl;
     	if (shape == "Circle")
     	{
-    		fscanf(file, "%lf", &r);
+    		file >> r;
     		Shape * s = new Circle(r);
     		v.push_back(s);
     	}
     	if (shape == "Rectangle")
     	{
-    		fscanf(file, "%lf", &l);
-    		fscanf(file, "%lf", &w);
+    		file >> w >> l;
     		Shape * s = new Rectangle(w, l);
     		v.push_back(s);
     	}
     	if (shape == "Sphere")
     	{
-    		fscanf(file, "%lf", &r);
+    		file >> r;
     		Shape * s = new Sphere(r);
     		v.push_back(s);
     	}
     	if (shape == "RectPrism")
     	{
-    		fscanf(file, "%lf", &l);
-    		fscanf(file, "%lf", &w);
-    		fscanf(file, "%lf", &h);
+    		file >> w >> l >> h;
     		Shape * s = new RectPrism(w, l, h);
     		v.push_back(s);
     	}
     }
-    fclose(file);
+    //fclose(file);
 	return v; // please remeber to modify this line to return the correct value
 }
 
