@@ -157,34 +157,36 @@ vector<Shape*> CreateShapes(char* file_name){
 	file = fopen(file_name, "r");
 	int size = fscanf(file, "%d", &size);
 	vector<Shape*> v(size);
+	string shape;
+	double r, l, w, h;
 
 	while(feof(file) == 0)
     {    	
-    	string shape = fscanf(file, "%s", &shape);
+    	fscanf(file, "%s", &shape);
     	if (shape.compare("Circle"))
     	{
-    		double r = fscanf(file, "%lf", &r);
+    		fscanf(file, "%lf", &r);
     		Shape * s = new Circle(r);
     		v.push_back(s);
     	}
     	if (shape.compare("Rectangle"))
     	{
-    		double l = fscanf(file, "%lf", &l);
-    		double w = fscanf(file, "%lf", &w);
+    		fscanf(file, "%lf", &l);
+    		fscanf(file, "%lf", &w);
     		Shape * s = new Rectangle(w, l);
     		v.push_back(s);
     	}
     	if (shape.compare("Sphere"))
     	{
-    		double r = fscanf(file, "%lf", &r);
+    		fscanf(file, "%lf", &r);
     		Shape * s = new Sphere(r);
     		v.push_back(s);
     	}
     	if (shape.compare("RectPrism"))
     	{
-    		double l = fscanf(file, "%lf", &l);
-    		double w = fscanf(file, "%lf", &w);
-    		double h = fscanf(file, "%lf", &h);
+    		fscanf(file, "%lf", &l);
+    		fscanf(file, "%lf", &w);
+    		fscanf(file, "%lf", &h);
     		Shape * s = new RectPrism(w, l, h);
     		v.push_back(s);
     	}
