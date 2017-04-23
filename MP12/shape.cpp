@@ -201,8 +201,7 @@ double MaxArea(vector<Shape*> shapes){
 	double max_area = 0;
 	for (vector<Shape*>::iterator it = shapes.begin(); it != shapes.end(); ++it)
 	{
-		Shape s = *it;
-		double temp = s->getArea();
+		double temp = (*it)->getArea();
 		if (temp > max_area)
 			max_area = temp;
 	}
