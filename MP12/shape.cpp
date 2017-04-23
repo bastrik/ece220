@@ -21,7 +21,7 @@ string Shape::getName()
 //Rectangle
 //Please implement the member functions of Rectangle:
 //constructor, getArea(), getVolume(), operator+, operator-
-Rectangel::Rectangle(double width, double length)
+Rectangle::Rectangle(double width, double length)
 {
 	width_ = width;
 	length_ = length;
@@ -47,8 +47,8 @@ Rectangle Rectangle::operator + (const Rectangle& rec)
 Rectangle Rectangle::operator - (const Rectangle& rec)
 {
 	Rectangle rectangle;
-	rectangle.length_ = max(0, this->length_ - rec.length_);
-	rectangle.width_ = max(0, this->width_ + rec.width_);
+	rectangle.length_ = max(0.0, this->length_ - rec.length_);
+	rectangle.width_ = max(0.0, this->width_ + rec.width_);
 	return rectangle;
 }
 
@@ -79,7 +79,7 @@ Circle Circle::operator + (const Circle& cir)
 Circle Circle::operator - (const Circle& cir)
 {
 	Circle circle;
-	circle.radius_ = max(0, this->radius_ + cir.radius_);
+	circle.radius_ = max(0.0, this->radius_ + cir.radius_);
 	return circle;
 }
 //Sphere
@@ -108,7 +108,7 @@ Sphere Sphere::operator + (const Sphere& sph)
 Sphere Sphere::operator - (const Sphere& sph)
 {
 	Sphere sphere;
-	sphere.radius_ = max(0, this->radius_ + sph.radius_);
+	sphere.radius_ = max(0.0, this->radius_ + sph.radius_);
 	return sphere;
 }
 //Rectprism
@@ -143,9 +143,9 @@ RectPrism RectPrism::operator + (const RectPrism& rectp)
 RectPrism RectPrism::operator - (const RectPrism& rectp)
 {
 	RectPrism rectPrism;
-	rectPrism.length_ = max(0, this->length_ + rectp.length_);
-	rectPrism.width_ = max(0, this->width_ + rectp.width_);
-	rectPrism.height_ = max(0, this->height_ + rectp.height_);
+	rectPrism.length_ = max(0.0, this->length_ + rectp.length_);
+	rectPrism.width_ = max(0.0, this->width_ + rectp.width_);
+	rectPrism.height_ = max(0.0, this->height_ + rectp.height_);
 	return rectPrism;
 }
 
