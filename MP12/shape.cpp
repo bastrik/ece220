@@ -163,27 +163,27 @@ vector<Shape*> CreateShapes(char* file_name){
 	while(feof(file) == 0)
     {    	
     	fscanf(file, "%s", &shape);
-    	cout >> shape >> endl;
-    	if (shape.compare("Circle") == 0)
+    	cout << shape << endl;
+    	if (shape == "Circle")
     	{
     		fscanf(file, "%lf", &r);
     		Shape * s = new Circle(r);
     		v.push_back(s);
     	}
-    	if (shape.compare("Rectangle") == 0)
+    	if (shape == "Rectangle")
     	{
     		fscanf(file, "%lf", &l);
     		fscanf(file, "%lf", &w);
     		Shape * s = new Rectangle(w, l);
     		v.push_back(s);
     	}
-    	if (shape.compare("Sphere") == 0)
+    	if (shape == "Sphere")
     	{
     		fscanf(file, "%lf", &r);
     		Shape * s = new Sphere(r);
     		v.push_back(s);
     	}
-    	if (shape.compare("RectPrism") == 0)
+    	if (shape == "RectPrism")
     	{
     		fscanf(file, "%lf", &l);
     		fscanf(file, "%lf", &w);
