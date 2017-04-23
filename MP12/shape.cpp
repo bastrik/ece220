@@ -163,26 +163,26 @@ vector<Shape*> CreateShapes(char* file_name){
 	while(feof(file) == 0)
     {    	
     	fscanf(file, "%s", &shape);
-    	if (shape.compare("Circle"))
+    	if (shape.compare("Circle") == 0)
     	{
     		fscanf(file, "%lf", &r);
     		Shape * s = new Circle(r);
     		v.push_back(s);
     	}
-    	if (shape.compare("Rectangle"))
+    	if (shape.compare("Rectangle") == 0)
     	{
     		fscanf(file, "%lf", &l);
     		fscanf(file, "%lf", &w);
     		Shape * s = new Rectangle(w, l);
     		v.push_back(s);
     	}
-    	if (shape.compare("Sphere"))
+    	if (shape.compare("Sphere") == 0)
     	{
     		fscanf(file, "%lf", &r);
     		Shape * s = new Sphere(r);
     		v.push_back(s);
     	}
-    	if (shape.compare("RectPrism"))
+    	if (shape.compare("RectPrism") == 0)
     	{
     		fscanf(file, "%lf", &l);
     		fscanf(file, "%lf", &w);
