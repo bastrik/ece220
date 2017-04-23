@@ -163,7 +163,7 @@ vector<Shape*> CreateShapes(char* file_name){
 	while(feof(file) == 0)
     {    	
     	fscanf(file, "%s", &shape);
-    	cout << shape << endl;
+    	cout >> shape >> endl;
     	if (shape.compare("Circle") == 0)
     	{
     		fscanf(file, "%lf", &r);
