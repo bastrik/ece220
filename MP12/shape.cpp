@@ -72,13 +72,13 @@ double Circle::getVolume()
 }
 Circle Circle::operator + (const Circle& cir)
 {
-	Circle circle;
+	Circle circle(0.0);
 	circle.radius_ = this->radius_ + cir.radius_;
 	return circle;
 }
 Circle Circle::operator - (const Circle& cir)
 {
-	Circle circle;
+	Circle circle(0.0);
 	circle.radius_ = max(0.0, this->radius_ + cir.radius_);
 	return circle;
 }
@@ -97,17 +97,17 @@ double Sphere::getArea()
 }
 double Sphere::getVolume()
 {
-	return (4./3.) * radius_ * radius_ * radius_ * PI;
+	return (4./3.) * radius_ * radius_ * radius_ * M_PI;
 }
 Sphere Sphere::operator + (const Sphere& sph)
 {
-	Sphere sphere;
+	Sphere sphere(0.0);
 	sphere.radius_ = this->radius_ + sph.radius_;
 	return sphere;
 }
 Sphere Sphere::operator - (const Sphere& sph)
 {
-	Sphere sphere;
+	Sphere sphere(0.0);
 	sphere.radius_ = max(0.0, this->radius_ + sph.radius_);
 	return sphere;
 }
@@ -134,7 +134,7 @@ double RectPrism::getVolume()
 }
 RectPrism RectPrism::operator + (const RectPrism& rectp)
 {
-	RectPrism rectPrism;
+	RectPrism rectPrism(0.0, 0.0, 0.0);
 	rectPrism.length_ = this->length_ + rectp.length_;
 	rectPrism.width_ = this->width_ + rectp.width_;
 	rectPrism.height_ = this->height_ + rectp.height_;
@@ -142,7 +142,7 @@ RectPrism RectPrism::operator + (const RectPrism& rectp)
 }
 RectPrism RectPrism::operator - (const RectPrism& rectp)
 {
-	RectPrism rectPrism;
+	RectPrism rectPrism(0.0, 0.0, 0.0);
 	rectPrism.length_ = max(0.0, this->length_ + rectp.length_);
 	rectPrism.width_ = max(0.0, this->width_ + rectp.width_);
 	rectPrism.height_ = max(0.0, this->height_ + rectp.height_);
