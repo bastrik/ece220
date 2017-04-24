@@ -157,13 +157,12 @@ vector<Shape*> CreateShapes(char* file_name){
 	file.open(file_name, ios::in);
 	int size;
 	file >> size;
-	vector<Shape*> v(size);
+	vector<Shape*> v;
 	string shape;
 	double r, l, w, h;
 
 	while(file >> shape)
     {
-    	cout << shape << endl;
     	if (shape == "Circle")
     	{
     		file >> r;
@@ -196,12 +195,15 @@ vector<Shape*> CreateShapes(char* file_name){
 // return the max area
 double MaxArea(vector<Shape*> shapes){
 	double max_area = 0;
+
 	for (vector<Shape*>::iterator it = shapes.begin(); it != shapes.end(); ++it)
 	{
 		double temp = (**it).getArea();
 		if (temp > max_area)
 			max_area = temp;
 	}
+	
+
 	
 	return max_area;
 }
@@ -211,7 +213,12 @@ double MaxArea(vector<Shape*> shapes){
 // return the max volume
 double MaxVolume(vector<Shape*> shapes){
 	double max_volume = 0;
-	//@@Insert your code here
+	for (vector<Shape*>::iterator it = shapes.begin(); it != shapes.end(); ++it)
+	{
+		double temp = (**it).getVolume();
+		if (temp > max_volume)
+			max_volume = temp;
+	}
 
 	
 	return max_volume;
