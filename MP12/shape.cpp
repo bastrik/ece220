@@ -48,7 +48,7 @@ Rectangle Rectangle::operator - (const Rectangle& rec)
 {
 	Rectangle rectangle;
 	rectangle.length_ = max(0.0, this->length_ - rec.length_);
-	rectangle.width_ = max(0.0, this->width_ + rec.width_);
+	rectangle.width_ = max(0.0, this->width_ - rec.width_);
 	return rectangle;
 }
 
@@ -79,7 +79,7 @@ Circle Circle::operator + (const Circle& cir)
 Circle Circle::operator - (const Circle& cir)
 {
 	Circle circle(0.0);
-	circle.radius_ = max(0.0, this->radius_ + cir.radius_);
+	circle.radius_ = max(0.0, this->radius_ - cir.radius_);
 	return circle;
 }
 //Sphere
@@ -108,7 +108,7 @@ Sphere Sphere::operator + (const Sphere& sph)
 Sphere Sphere::operator - (const Sphere& sph)
 {
 	Sphere sphere(0.0);
-	sphere.radius_ = max(0.0, this->radius_ + sph.radius_);
+	sphere.radius_ = max(0.0, this->radius_ - sph.radius_);
 	return sphere;
 }
 //Rectprism
@@ -143,9 +143,9 @@ RectPrism RectPrism::operator + (const RectPrism& rectp)
 RectPrism RectPrism::operator - (const RectPrism& rectp)
 {
 	RectPrism rectPrism(0.0, 0.0, 0.0);
-	rectPrism.length_ = max(0.0, this->length_ + rectp.length_);
-	rectPrism.width_ = max(0.0, this->width_ + rectp.width_);
-	rectPrism.height_ = max(0.0, this->height_ + rectp.height_);
+	rectPrism.length_ = max(0.0, this->length_ - rectp.length_);
+	rectPrism.width_ = max(0.0, this->width_ - rectp.width_);
+	rectPrism.height_ = max(0.0, this->height_ - rectp.height_);
 	return rectPrism;
 }
 
