@@ -17,7 +17,7 @@ circuit2: $(BIN)
 	./$(BIN) circuits/circuit2.txt
 
 circuit3: $(BIN)
-	./$(BIN) circuits/circuit3.txt
+	./$(BIN) circuit3.txt
 
 circuit4: $(BIN)
 	./$(BIN) circuits/circuit4.txt
