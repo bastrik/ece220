@@ -189,7 +189,7 @@ vector<Shape*> CreateShapes(char* file_name){
     		v.push_back(s);
     	}
     }
-    //fclose(file);
+    cout << v << endl;
 	return v; // please remeber to modify this line to return the correct value
 }
 
