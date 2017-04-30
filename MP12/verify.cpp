@@ -2,8 +2,8 @@
 
 
 int main(int argc, char *argv[]){
-	if(argc != 2) {
-    	cerr << "USAGE: ./verify_mp12 input.txt" << endl; 
+	if(argc != 3) {
+    	cerr << "USAGE: ./verify_mp12 input.txt lateSubmission" << endl; 
     	return -1;
   	}
 	cout << " \n\n ------------------- Begin Verifying MP12 ---------------------" << endl;
@@ -23,7 +23,8 @@ int main(int argc, char *argv[]){
 	//cout << "CreateShape(): " << create_p << "/16/" << endl;
 	cout << "MaxArea(): " << ma_p << "/10" << endl;
 	cout << "MaxVolume(): " << mv_p << "/10" << endl;
-	cout << "Your total Socre for MP12: " << mv_p + ma_p + name_p + rec_p + cir_p + s_p + rp_p << "/100" << endl;
+	cout << "Late Penalty: " << argv[2] << endl;
+	cout << "Your total Score for MP12: " << mv_p + ma_p + name_p + rec_p + cir_p + s_p + rp_p - atoi(argv[2]) << "/100" << endl;
 	cout << "-------------------- End Verifying MP12 ----------------------" << endl << endl << endl;
 	
 	return 0;
